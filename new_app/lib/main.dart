@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:new_app/screens/screen_home/screen_home.dart';
+import 'package:new_app/screens/screen_splash/screen_splash_page1.dart';
 import 'package:timezone/data/latest.dart'as tz;
 
 void main() async {
@@ -16,12 +17,16 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setPreferredOrientations([
+        DeviceOrientation.portraitUp,
+        DeviceOrientation.portraitDown,
+      ]);
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
         primarySwatch: Colors.blueGrey,
       ),
-      home:  const Homepage(),
+      home:  const SplashPage1(),
     );
   }
 }

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'colors.dart';
 
-BoxDecoration ContainerDecoration() {
+BoxDecoration containerDecoration() {
   return BoxDecoration(
     color: white,
     borderRadius: BorderRadius.circular(15),

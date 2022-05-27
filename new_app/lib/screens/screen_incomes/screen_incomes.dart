@@ -7,7 +7,9 @@ import 'package:new_app/functions/filter_by_period.dart';
 import 'package:new_app/screens/screen_home/screen_home.dart';
 import 'package:new_app/widgets/button_style.dart';
 import 'package:new_app/widgets/colors.dart';
+import 'package:new_app/widgets/fl_chart/fl_chart.dart';
 import 'package:new_app/widgets/fl_chart/fl_chart_functions.dart';
+import 'package:new_app/widgets/global_variables.dart';
 import 'package:new_app/widgets/painter_class.dart';
 import 'package:new_app/widgets/sized_boxes.dart';
 import 'package:new_app/widgets/text_widget.dart';
@@ -87,27 +89,27 @@ class _IncomespageState extends State<Incomespage>
                     if (snapshot.data == null) {
                       return const Text('Nothing found');
                     } else {
-                      getChartPoints(snapshot.data!, "Income");
-                      dbHelper.fetchdata();
+                      getChartPoints(snapshot.data!,"Income");
                       return SingleChildScrollView(
                         child: Column(
                           children: [
                             Column(
                               children: [
                                 sizedH10,
-                                // // datasetIncome.length < 2
-                                // //     ? const Center(
-                                // //         child: TextWidget(
-                                // //         text:
-                                // //             "Not enough values to render a chart",
-                                // //         color: Colors.amber,
-                                // //         maxsize: 15,
-                                // //         minsize: 11,
-                                // //       ))
-                                // //     : TransactionsChart(
-                                // //         data: snapshot.data,
-                                // //         chartfor: "Income"),
-                                // sizedH10,
+                                
+                                datasetIncome.length < 2
+                                    ? const Center(
+                                        child: TextWidget(
+                                        text:
+                                            "Not enough values to render a chart",
+                                        color: Colors.amber,
+                                        maxsize: 15,
+                                        minsize: 11,
+                                      ))
+                                    : TransactionsChart(
+                                        data: snapshot.data,
+                                        chartfor: "Income"),
+                                sizedH10,
                                 Padding(
                                   padding: const EdgeInsets.all(8.0),
                                   child: Row(

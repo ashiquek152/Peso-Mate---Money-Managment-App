@@ -36,10 +36,6 @@ Future<dynamic> wipeAppdata(context) {
                 child: const Text(
                   "Cancel",
                   style: TextStyle(color: amber),
-
-                  // color: amber,
-                  // maxsize: 12,
-                  // minsize: 8,
                 ))
           ],
           backgroundColor: scfldWhite,
@@ -57,24 +53,12 @@ Future settingsTiles({required title, required content, context}) async {
         title: const Text(
             "Are you sure want to clear all data ?",
             style: TextStyle(color: scfldWhite),
-          ), 
-        // TextWidget(
-        //   text: title,
-        //   fontWeight: FontWeight.bold,
-        //   color: green,
-        //   maxsize: 20,
-        //   minsize: 16,
-        // ),
+          ),
         content: 
          const Text(
             "Are you sure want to clear all data ?",
             style: TextStyle(color: scfldWhite),
           ),
-        // TextWidget(
-        //   text: content,
-        //   maxsize: 14,
-        //   minsize: 10,
-        // ),
         actions: [
           Center(
             child: TextButton(

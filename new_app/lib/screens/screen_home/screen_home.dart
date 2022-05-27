@@ -9,6 +9,7 @@ import 'package:new_app/screens/screen_home/widgets/top_container.dart';
 import 'package:new_app/screens/screen_settings/screen_settings.dart';
 import 'package:new_app/widgets/button_style.dart';
 import 'package:new_app/widgets/colors.dart';
+import 'package:new_app/widgets/global_variables.dart';
 import 'package:new_app/widgets/painter_class.dart';
 import 'package:new_app/widgets/text_widget.dart';
 import 'package:new_app/widgets/transaction_card.dart';
@@ -129,7 +130,7 @@ class _MyCustomUIState extends State<Homepage>
                               : 5,
                           itemBuilder: (context, index) {
                             final newList = snapshot.data!.reversed;
-                            TransactionModel dataAtindex =
+                           final TransactionModel dataAtindex =
                                 newList.elementAt(index);
                             if (dataAtindex.type == 'Income') {
                               return Cards(data: dataAtindex, index: index);

@@ -3,7 +3,7 @@ import 'package:new_app/db_helper/db_helper.dart';
 import 'package:new_app/screens/screen_home/screen_home.dart';
 import 'package:new_app/widgets/button_style.dart';
 import 'package:new_app/widgets/colors.dart';
-import 'package:new_app/widgets/common_%20app_bar.dart';
+import 'package:new_app/widgets/common_%20appbar.dart';
 import 'package:new_app/widgets/container_decoration.dart';
 import 'package:new_app/widgets/months_list.dart';
 import 'package:new_app/widgets/painter_class.dart';
@@ -16,13 +16,13 @@ class AddTransactionPage extends StatefulWidget {
   const AddTransactionPage({Key? key}) : super(key: key);
 
   @override
-  _HomePageState createState() => _HomePageState();
+  _AddTransactionState createState() => _AddTransactionState();
 }
 
-class _HomePageState extends State<AddTransactionPage>
+class _AddTransactionState extends State<AddTransactionPage>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
-  late Animation<double> _opacity;
+  late Animation<double> opacity;
   late Animation<double> _transform;
   GlobalKey<FormState> addformKey1 = GlobalKey();
   int? amount;
@@ -40,7 +40,7 @@ class _HomePageState extends State<AddTransactionPage>
       vsync: this,
       duration: const Duration(seconds: 2),
     );
-    _opacity = Tween<double>(begin: 0, end: 1).animate(
+    opacity = Tween<double>(begin: 0, end: 1).animate(
       CurvedAnimation(
         parent: _controller,
         curve: Curves.ease,
@@ -85,7 +85,7 @@ class _HomePageState extends State<AddTransactionPage>
                       width: size.width * .9,
                       height: size.width * 1.1,
                       decoration: 
-                      ContainerDecoration(),
+                      containerDecoration(),
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: SingleChildScrollView(

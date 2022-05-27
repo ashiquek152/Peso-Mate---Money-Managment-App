@@ -175,7 +175,7 @@ class _LoginpgageState extends State<Loginpage>
         alignment: Alignment.center,
         child: Center(
           child: TextFormField(
-            style: const TextStyle(color: white),
+            style: const TextStyle(color: scaffoldbgnew),
             validator: (value) {
               if (value == null || value.isEmpty) {
                 return 'Please enter a name ';

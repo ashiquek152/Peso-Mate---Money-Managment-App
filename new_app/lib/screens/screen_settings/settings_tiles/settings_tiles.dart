@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:new_app/notification_model/notification_model.dart';
+import 'package:new_app/screens/screen_home/screen_home.dart';
+import 'package:new_app/screens/screen_settings/about_dialoge/about_dialog.dart';
 import 'package:new_app/screens/screen_settings/wipe_data/wipe_app_data.dart';
 import 'package:new_app/widgets/colors.dart';
-import 'package:new_app/widgets/sized_boxes.dart';
+import 'package:new_app/widgets/snackbar.dart';
 import 'package:new_app/widgets/text_widget.dart';
-import 'package:new_app/widgets/textfield_border.dart';
+
 class SettingsTiles extends StatefulWidget {
   const SettingsTiles({
     Key? key,
@@ -31,8 +33,21 @@ class _SettingsTilesState extends State<SettingsTiles>
     with TickerProviderStateMixin {
   bool isTapped = false;
   TimeOfDay? pickedTIme;
-  final messageController = TextEditingController();
-  final timeNow = TimeOfDay.now();
+  final timeRightNow = TimeOfDay.now();
+
+  @override
+  void initState() {
+    NotificationApi().init(initScheduled: true);
+    listenNotifications();
+    super.initState();
+  }
+      listenNotifications(){
+        NotificationApi.onNotifications.listen(onclickNotifications);
+      
+    }
+    onclickNotifications(String? payload){
+      Navigator.of(context).pushReplacement(MaterialPageRoute(builder:  (context) => const Homepage()));
+    }
 
   @override
   Widget build(BuildContext context) {
@@ -44,9 +59,7 @@ class _SettingsTilesState extends State<SettingsTiles>
             ontapAbout(context); // Working properly
             break;
           case 2:
-            ontapNotifications(context);
-            // Navigator.of(context).push(MaterialPageRoute(builder: (context) => ResponsiveButton()));
-
+            timePicking(context: context);
             break;
           case 3:
             wipeAppdata(context); // Working properly
@@ -102,85 +115,31 @@ class _SettingsTilesState extends State<SettingsTiles>
     );
   }
 
-  ontapAbout(context) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return const SimpleDialog(
-          backgroundColor: scaffoldbgnew,
-          title: Text(
-            "About",
-            style: TextStyle(color: amber, fontSize: 18),
-          ),
-          children: [
-            Padding(
-              padding: EdgeInsets.all(8.0),
-              child: Text(
-                "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-                style: TextStyle(color: scfldWhite, fontSize: 15),
-              ),
-            )
-          ],
-        );
-      },
-    );
-  }
-
+  //
+  //
+  //
+  //
+  //
   //
   ontapNotifications(context) {
-    showModalBottomSheet(
-      isDismissible: true,
-      backgroundColor: Colors.transparent,
+    showModalBottomSheet<void>(
       context: context,
-      builder: (BuildContext bc) {
+      builder: (BuildContext context) {
         return Container(
-          height: 400,
-          decoration: BoxDecoration(
-              color: white.withOpacity(0.1),
-              borderRadius: const BorderRadius.only(
-                  topLeft: Radius.circular(30), topRight: Radius.circular(30))),
+          height: 200,
+          color: Colors.amber,
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              sizedH20,
               const TextWidget(
-                text: "What should be notified ?",
+                text: "Add Notification",
+                minsize: 18,
                 maxsize: 20,
-                minsize: 15,
+                fontWeight: FontWeight.bold,
               ),
-              Padding(
-                padding: const EdgeInsets.all(15.0),
-                child: TextFormField(
-                  controller: messageController,
-                  style: const TextStyle(color: white),
-                  // validator: (value) {
-                  //   if (value == null || value.isEmpty) {
-                  //     return 'Please enter a message max : 20';
-                  //   } else {
-                  //     return null;
-                  //   }
-                  // },
-                  decoration: InputDecoration(
-                    fillColor: const Color.fromARGB(6, 2, 2, 2),
-                    filled: true,
-                    hintText: 'Message...',
-                    hintStyle: const TextStyle(
-                        color: Color.fromARGB(92, 255, 255, 255)),
-                    enabledBorder: textFieldBorderStyle(),
-                    focusedBorder: textFieldBorderStyle(),
-                    errorBorder: textFieldBorderStyle(color: red),
-                    focusedErrorBorder: textFieldBorderStyle(color: red),
-                  ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(15.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    bottomSheetButtons(1),
-                    bottomSheetButtons(2),
-                  ],
-                ),
+              ElevatedButton(
+                child: const Text('Set Time'),
+                onPressed: () => timePicking(context: context),
               )
             ],
           ),
@@ -189,78 +148,23 @@ class _SettingsTilesState extends State<SettingsTiles>
     );
   }
 
-  InkWell bottomSheetButtons(int buttonIndex) {
-    return InkWell(
-      highlightColor: Colors.transparent,
-      splashColor: Colors.transparent,
-      onHighlightChanged: (value) {
-        setState(() {
-          isTapped = value;
-        });
-      },
-      onTap: () {
-        switch (buttonIndex) {
-          case 1:
-            timePicking(context: context);
-            break;
-          case 2:
-            notifymessageadded();
-            //  Navigator.of(context).pop();
-            break;
-        }
-      },
-      child: AnimatedContainer(
-        duration: const Duration(milliseconds: 300),
-        curve: Curves.fastLinearToSlowEaseIn,
-        height: isTapped ? 35 : 45,
-        width: isTapped ? 80 : 100,
-        decoration: BoxDecoration(
-          color: amber,
-          borderRadius: const BorderRadius.all(
-            Radius.circular(30),
-          ),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.3),
-              blurRadius: 30,
-              offset: const Offset(3, 7),
-            ),
-          ],
-        ),
-        child: Center(
-          child: TextWidget(
-            text: buttonIndex == 1 ? "Set timer" : "Done",
-            color: buttonIndex == 1 ? scaffoldbgnew : white,
-            fontWeight: FontWeight.bold,
-            maxsize: 16,
-            minsize: 12,
-          ),
-        ),
-      ),
-    );
-  }
-
+  //
+  //
+  //
+  //
   timePicking({required context}) async {
     pickedTIme = await showTimePicker(
+        helpText: "Set time for notification",
         initialEntryMode: TimePickerEntryMode.dial,
         context: context,
-        initialTime: timeNow);
-  }
-
-  notifymessageadded() {
-    if (pickedTIme != null && pickedTIme != timeNow) {
-      String? message = messageController.text;
-      setState(() {
-        NotificationApi.showScheduledNotifications(
-            title: "Peso Mate",
-            body: message,
-            scheduledTime: Time(pickedTIme!.hour, pickedTIme!.minute, 0));
-        Navigator.of(context).pop();
-        messageController.text = "";
-        // snackbar(content: "Notification added", color: blueGrey);
-      });
-    } else {
-      showAboutDialog(context: context);
+        initialTime: timeRightNow);
+    if (pickedTIme != null && pickedTIme != timeRightNow) {
+      NotificationApi.showScheduledNotifications(
+          title: "Peso Mate",
+          body: "You forgot to add something",
+          scheduledTime: Time(pickedTIme!.hour, pickedTIme!.minute, 0));
+      Navigator.of(context).pop();
+      snackbar(content: "Notification added", color: amber);
     }
   }
 }

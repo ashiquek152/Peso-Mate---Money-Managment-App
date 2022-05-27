@@ -2,7 +2,8 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:new_app/db_helper/transactions_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-int pageIndex=0;
+
+
 
 class DbHelper {
   
@@ -13,7 +14,6 @@ class DbHelper {
     } else {
       List<TransactionModel> items = [];
       box.toMap().values.forEach((element) {
-        // print(element);
         items.add(TransactionModel(
             element['amount'] as int,
             element['category'] as String,
@@ -45,12 +45,10 @@ class DbHelper {
     final box=Hive.box("MoneyManagement");
 
     await box.deleteAt(index);
-    // print(box.values);
   }
 
   Future updateDB(int amount, type, selectedDate, category, index) async {
     final box=Hive.box("MoneyManagement");
-
     var value = {
       'amount': amount,
       'date': selectedDate,

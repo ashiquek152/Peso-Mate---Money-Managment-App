@@ -24,7 +24,6 @@ class TopContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     double mqH = MediaQuery.of(context).size.height;
     double mqW = MediaQuery.of(context).size.width;
-    print("$mqW   hjchbkjac $mqH ");
     return SizedBox(
       height: mqH / 2.3,
       child: Column(

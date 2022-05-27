@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/services.dart';
 import 'package:new_app/screens/screen_settings/settings_tiles/settings_tiles.dart';
-import 'package:new_app/widgets/colors.dart';
+import 'package:new_app/widgets/common_%20appbar.dart';
 import 'package:new_app/widgets/painter_class.dart';
-import 'package:new_app/widgets/text_widget.dart';
 
 class Settingspage extends StatefulWidget {
   const Settingspage({Key? key}) : super(key: key);
@@ -19,32 +16,11 @@ class _SettingspageState extends State<Settingspage> {
     double _w = MediaQuery.of(context).size.width;
 
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: amber,
-        systemOverlayStyle: SystemUiOverlayStyle.dark,
-        elevation: 0,
-        title: const TextWidget(
-           text: "Settings",
-          
-          family: 'Swera',
-          color: scaffoldbgnew,
-          maxsize: 20,
-          minsize: 16,
-        ),
-        centerTitle: true,
-        automaticallyImplyLeading: false,
-        leading: IconButton(
-          enableFeedback: true,
-          icon: const Icon(
-            CupertinoIcons.arrow_left_circle,
-            size: 35,
-            color: scaffoldbgnew,
-          ),
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
-        ),
-      ),
+       appBar: const PreferredSize(
+          preferredSize: Size.fromHeight(50),
+          child: AppBarcommon(
+            pageHeading: "Settings",
+          )),
       body: Stack(
         children: [
           ListView(
