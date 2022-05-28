@@ -45,6 +45,15 @@ class DbHelper {
     final box=Hive.box("MoneyManagement");
 
     await box.deleteAt(index);
+
+    List<TransactionModel> items = [];
+      box.toMap().values.forEach((element) {
+        items.add(TransactionModel(
+            element['amount'] as int,
+            element['category'] as String,
+            element['date'] as DateTime,
+            element['type'] as String));
+      });
   }
 
   Future updateDB(int amount, type, selectedDate, category, index) async {
@@ -56,11 +65,8 @@ class DbHelper {
       'category': category,
     };
     box.putAt(index, value);
-    // getChartPoints(, type.toString());
   }
-
   Future clearDB()async{
-
     Hive.box('MoneyManagement').clear();
   }
 

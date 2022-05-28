@@ -9,8 +9,11 @@ import 'package:new_app/screens/screen_home/widgets/top_container.dart';
 import 'package:new_app/screens/screen_settings/screen_settings.dart';
 import 'package:new_app/widgets/button_style.dart';
 import 'package:new_app/widgets/colors.dart';
+import 'package:new_app/widgets/fl_chart/fl_chart.dart';
+import 'package:new_app/widgets/fl_chart/fl_chart_functions.dart';
 import 'package:new_app/widgets/global_variables.dart';
 import 'package:new_app/widgets/painter_class.dart';
+import 'package:new_app/widgets/sized_boxes.dart';
 import 'package:new_app/widgets/text_widget.dart';
 import 'package:new_app/widgets/transaction_card.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -40,6 +43,8 @@ class _MyCustomUIState extends State<Homepage>
 
   @override
   Widget build(BuildContext context) {
+    double mqH = MediaQuery.of(context).size.height;
+    double mqW = MediaQuery.of(context).size.width;
     return Scaffold(
         backgroundColor: scfldWhite,
         appBar: AppBar(
@@ -111,6 +116,7 @@ class _MyCustomUIState extends State<Homepage>
                 return const Center(child: Text('Nothing found'));
               } else {
                 getTotalBalance(snapshot.data!);
+                getChartPoints(snapshot.data!);
               }
               return Stack(children: [
                 ListView(
@@ -122,23 +128,29 @@ class _MyCustomUIState extends State<Homepage>
                           totalBalance: totalBalance,
                           totalIncome: totalIncome,
                           totalExpense: totalExpense),
-                      ListView.builder(
-                          shrinkWrap: true,
-                          physics: const NeverScrollableScrollPhysics(),
-                          itemCount: snapshot.data!.length < 5
-                              ? snapshot.data!.length
-                              : 5,
-                          itemBuilder: (context, index) {
-                            final newList = snapshot.data!.reversed;
-                           final TransactionModel dataAtindex =
-                                newList.elementAt(index);
-                            if (dataAtindex.type == 'Income') {
-                              return Cards(data: dataAtindex, index: index);
-                            } else {
-                              return Cards(data: dataAtindex, index: index);
-                            }
-                          }),
-                      Padding(
+                      dataset.length < 2
+                          ? const Center(
+                              child: TextWidget(
+                              text: "Not enough values to render a chart",
+                              color: Colors.amber,
+                              maxsize: 15,
+                              minsize: 11,
+                            ))
+                          : TransactionsChart(
+                              data: snapshot.data!, chartfor: "Income"),
+                      sizedH10,
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Text(
+                            'Recent Transactions',
+                            style: TextStyle(
+                                fontFamily: 'Comfortaa',
+                                fontSize: mqH / 35,
+                                color: amber,
+                                fontWeight: FontWeight.bold),
+                          ),
+                          Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: SizedBox(
                               height: 50,
@@ -156,15 +168,33 @@ class _MyCustomUIState extends State<Homepage>
                                   ),
                                   onPressed: () {
                                     Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) =>
-                                            const AllTransactionspage(),
-                                      )
-                                    ).whenComplete(() {
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              const AllTransactionspage(),
+                                        )).whenComplete(() {
                                       setState(() {});
                                     });
                                   }))),
+                        ],
+                      ),
+                      ListView.builder(
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          itemCount: snapshot.data!.length < 5
+                              ? snapshot.data!.length
+                              : 5,
+                          itemBuilder: (context, index) {
+                            final newList = snapshot.data!.reversed;
+                            final TransactionModel dataAtindex =
+                                newList.elementAt(index);
+                            if (dataAtindex.type == 'Income') {
+                              return Cards(data: dataAtindex, index: index);
+                            } else {
+                              return Cards(data: dataAtindex, index: index);
+                            }
+                          }),
+                      
                       const SizedBox(height: 70)
                     ]),
                 CustomPaint(
@@ -184,7 +214,7 @@ class _MyCustomUIState extends State<Homepage>
     totalBalance = 0;
     totalExpense = 0;
     totalIncome = 0;
-
+    
     for (TransactionModel data in alldata) {
       if (data.type == 'Income') {
         totalBalance = totalBalance + data.amount;

@@ -154,6 +154,7 @@ class _HomescreenState extends State<Updatescreen> {
                                       snackbar(
                                           content: 'Data updated !',
                                           color: amber));
+                                          dataChanged=ValueNotifier(true);
                                   await dbHelper.updateDB(amount!, type,
                                       selectedDate, category, index);
                                   Navigator.of(context).pushAndRemoveUntil(

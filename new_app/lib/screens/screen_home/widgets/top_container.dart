@@ -25,7 +25,8 @@ class TopContainer extends StatelessWidget {
     double mqH = MediaQuery.of(context).size.height;
     double mqW = MediaQuery.of(context).size.width;
     return SizedBox(
-      height: mqH / 2.3,
+      // color: red,
+      height: mqH / 2.9,
       child: Column(
         children: [
           sizedH20,
@@ -145,21 +146,6 @@ class TopContainer extends StatelessWidget {
                     ],
                   ),
                 ),
-              ),
-            ],
-          ),
-          sizedH20,
-          sizedH20,
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              Text(
-                'Recent Transactions',
-                style: TextStyle(
-                    fontFamily: 'Comfortaa',
-                    fontSize: mqH / 35,
-                    color: amber,
-                    fontWeight: FontWeight.bold),
               ),
             ],
           ),

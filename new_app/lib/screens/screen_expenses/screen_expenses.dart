@@ -5,8 +5,6 @@ import 'package:new_app/functions/filter_by_period.dart';
 import 'package:new_app/widgets/button_style.dart';
 import 'package:new_app/widgets/colors.dart';
 import 'package:new_app/widgets/common_%20appbar.dart';
-import 'package:new_app/widgets/fl_chart/fl_chart.dart';
-import 'package:new_app/widgets/fl_chart/fl_chart_functions.dart';
 import 'package:new_app/widgets/global_variables.dart';
 import 'package:new_app/widgets/painter_class.dart';
 import 'package:new_app/widgets/sized_boxes.dart';
@@ -34,7 +32,6 @@ class _ExpensepageState extends State<Expensepage>
   @override
   void initState() {
     pageIndex = 4;
-    getChartPoints(snapshotData, "Expense");
     super.initState();
   }
 
@@ -69,30 +66,30 @@ class _ExpensepageState extends State<Expensepage>
                     } else  {
                       snapshotData=snapshot.data!;
 
-                      getChartPoints(snapshotData, "Expense");
+                      // getChartPoints(snapshotData, "Expense");
                       return SingleChildScrollView(
                         child: Column(
                           children: [
                             Column(
                               children: [
                                 sizedH10,
-                                datasetExpense.length < 2
-                                    ? const Center(
-                                        child: TextWidget(
-                                          text:
-                                              "Not enough values to render a chart",
-                                          color: Colors.amber,
-                                          maxsize: 15,
-                                          minsize: 11,
-                                        ),
-                                      )
-                                    : Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: TransactionsChart(
-                                            data: snapshot.data,
-                                            chartfor: "Expense"),
-                                      ),
-                                sizedH10,
+                                // datasetExpense.length < 2
+                                //     ? const Center(
+                                //         child: TextWidget(
+                                //           text:
+                                //               "Not enough values to render a chart",
+                                //           color: Colors.amber,
+                                //           maxsize: 15,
+                                //           minsize: 11,
+                                //         ),
+                                //       )
+                                //     : Padding(
+                                //         padding: const EdgeInsets.all(8.0),
+                                //         child: TransactionsChart(
+                                //             data: snapshot.data,
+                                //             chartfor: "Expense"),
+                                //       ),
+                                // sizedH10,
                                 Padding(
                                   padding: const EdgeInsets.all(8.0),
                                   child: Row(
