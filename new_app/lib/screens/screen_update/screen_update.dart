@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:new_app/db_helper/db_helper.dart';
 import 'package:new_app/db_helper/transactions_model.dart';
-import 'package:new_app/screens/screen_all_transactions/screen_all_transactions.dart';
-import 'package:new_app/screens/screen_expenses/screen_expenses.dart';
 import 'package:new_app/screens/screen_home/screen_home.dart';
-import 'package:new_app/screens/screen_incomes/screen_incomes.dart';
 import 'package:new_app/widgets/button_style.dart';
 import 'package:new_app/widgets/colors.dart';
 import 'package:new_app/widgets/common_%20appbar.dart';
@@ -159,18 +156,8 @@ class _HomescreenState extends State<Updatescreen> {
                                       selectedDate, category, index);
                                   Navigator.of(context).pushAndRemoveUntil(
                                       MaterialPageRoute(builder: (ctx) {
-                                    switch (pageIndex) {
-                                      case 1:
-                                        return const Homepage();
-                                      case 2:
-                                        return const AllTransactionspage();
-                                      case 3:
-                                        return const Incomespage();
-                                      case 4:
-                                        return const Expensepage();
-                                      default:
-                                        return const Homepage();
-                                    }
+                                  return  const Homepage();
+                                  
                                   }), (route) => false);
                                 }
                               },

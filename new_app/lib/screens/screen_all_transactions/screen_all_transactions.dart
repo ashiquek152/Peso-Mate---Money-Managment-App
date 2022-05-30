@@ -187,9 +187,9 @@ class _AllTransactionspageState extends State<AllTransactionspage>
                                       TransactionModel dataAtindex =
                                           snapshot.data![index];
                                      if (dataAtindex.type == 'Income') {
-                                        return filterExpenseandIncome(dataAtindex, tappedMonth, dropdownValue, index, todayDate);
+                                        return filterExpenseandIncome(dataAtindex, tappedMonth, dropdownValue, index);
                                       }else if (dataAtindex.type == 'Expense') {
-                                        return filterExpenseandIncome(dataAtindex, tappedMonth, dropdownValue, index, todayDate);
+                                        return filterExpenseandIncome(dataAtindex, tappedMonth, dropdownValue, index);
                                     
                                       }
                                        else {

@@ -116,7 +116,7 @@ class _MyCustomUIState extends State<Homepage>
                 return const Center(child: Text('Nothing found'));
               } else {
                 getTotalBalance(snapshot.data!);
-                getChartPoints(snapshot.data!);
+                getChartPoints(snapshot.data!, "Expense", "All");
               }
               return Stack(children: [
                 ListView(
@@ -128,7 +128,17 @@ class _MyCustomUIState extends State<Homepage>
                           totalBalance: totalBalance,
                           totalIncome: totalIncome,
                           totalExpense: totalExpense),
-                      dataset.length < 2
+                          sizedH10,
+                           Text(
+                            'Expense',
+                            style: TextStyle(
+                                fontFamily: 'Comfortaa',
+                                fontSize: mqW / 20,
+                                color: amber,
+                                fontWeight: FontWeight.bold),
+                          ),
+                          sizedH10,
+                      datasetExpense.length < 2
                           ? const Center(
                               child: TextWidget(
                               text: "Not enough values to render a chart",
@@ -137,30 +147,32 @@ class _MyCustomUIState extends State<Homepage>
                               minsize: 11,
                             ))
                           : TransactionsChart(
-                              data: snapshot.data!, chartfor: "Income"),
+                            dropDownValue: "",
+                              data: snapshot.data!, chartfor: "Expense"),
                       sizedH10,
                       Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
                           Text(
                             'Recent Transactions',
                             style: TextStyle(
                                 fontFamily: 'Comfortaa',
-                                fontSize: mqH / 35,
+                                fontSize: mqW / 20,
                                 color: amber,
                                 fontWeight: FontWeight.bold),
                           ),
                           Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: SizedBox(
-                              height: 50,
+                              height: mqH/25,
+                              width: mqW/2.5,
                               child: ElevatedButton.icon(
                                   icon: const Icon(
                                       Icons.arrow_circle_right_outlined,
                                       color: scfldWhite),
                                   style: buttonStyle(color: amber),
                                   label: const TextWidget(
-                                    text: "See all trasactions",
+                                    text: "See all",
                                     fontWeight: FontWeight.bold,
                                     color: scfldWhite,
                                     maxsize: 16,

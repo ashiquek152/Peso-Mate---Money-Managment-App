@@ -5,11 +5,12 @@ import 'package:new_app/functions/filter_by_period.dart';
 import 'package:new_app/widgets/button_style.dart';
 import 'package:new_app/widgets/colors.dart';
 import 'package:new_app/widgets/common_%20appbar.dart';
+import 'package:new_app/widgets/fl_chart/fl_chart.dart';
+import 'package:new_app/widgets/fl_chart/fl_chart_functions.dart';
 import 'package:new_app/widgets/global_variables.dart';
 import 'package:new_app/widgets/painter_class.dart';
 import 'package:new_app/widgets/sized_boxes.dart';
 import 'package:new_app/widgets/text_widget.dart';
-
 
 class Expensepage extends StatefulWidget {
   const Expensepage({Key? key}) : super(key: key);
@@ -23,11 +24,9 @@ class _ExpensepageState extends State<Expensepage>
   DbHelper dbHelper = DbHelper();
 
   final dropdownlist = ['All', 'Today', 'This month', 'This year'];
-  var dropdownValue = "All";
   final todayDate = DateTime.now();
   int tappedMonth = DateTime.now().month;
-
-
+  var dropdownValue = "All";
 
   @override
   void initState() {
@@ -37,7 +36,8 @@ class _ExpensepageState extends State<Expensepage>
 
   @override
   Widget build(BuildContext context) {
-    double _w = MediaQuery.of(context).size.width;
+    double mqH = MediaQuery.of(context).size.height;
+    double mqW = MediaQuery.of(context).size.width;
     return Scaffold(
       backgroundColor: scfldWhite,
       appBar: const PreferredSize(
@@ -49,10 +49,10 @@ class _ExpensepageState extends State<Expensepage>
             physics: const BouncingScrollPhysics(
                 parent: AlwaysScrollableScrollPhysics()),
             children: [
-              SizedBox(height: _w / 13),
+              SizedBox(height: mqW / 13),
               FutureBuilder<List<TransactionModel>>(
                   future: dbHelper.fetchdata(),
-                  builder: (ccontext, AsyncSnapshot snapshot) {
+                  builder: (context, AsyncSnapshot snapshot) {
                     if (snapshot.hasError) {
                       return const Center(child: Text('Unexpected Error'));
                     }
@@ -63,33 +63,13 @@ class _ExpensepageState extends State<Expensepage>
                     }
                     if (snapshot.data == null) {
                       return const Text('Nothing found');
-                    } else  {
-                      snapshotData=snapshot.data!;
-
-                      // getChartPoints(snapshotData, "Expense");
+                    } else {
+                      getChartPoints(snapshot.data, "Expense", dropdownValue);
                       return SingleChildScrollView(
                         child: Column(
                           children: [
                             Column(
                               children: [
-                                sizedH10,
-                                // datasetExpense.length < 2
-                                //     ? const Center(
-                                //         child: TextWidget(
-                                //           text:
-                                //               "Not enough values to render a chart",
-                                //           color: Colors.amber,
-                                //           maxsize: 15,
-                                //           minsize: 11,
-                                //         ),
-                                //       )
-                                //     : Padding(
-                                //         padding: const EdgeInsets.all(8.0),
-                                //         child: TransactionsChart(
-                                //             data: snapshot.data,
-                                //             chartfor: "Expense"),
-                                //       ),
-                                // sizedH10,
                                 Padding(
                                   padding: const EdgeInsets.all(8.0),
                                   child: Row(
@@ -141,10 +121,6 @@ class _ExpensepageState extends State<Expensepage>
                                     ],
                                   ),
                                 ),
-                              ],
-                            ),
-                            Column(
-                              children: [
                                 Visibility(
                                   visible: dropdownValue == "This year"
                                       ? true
@@ -199,6 +175,45 @@ class _ExpensepageState extends State<Expensepage>
                                   ),
                                 ),
                                 sizedH10,
+                                datasetExpense.length < 2
+                                    ? const Center(
+                                        child: TextWidget(
+                                          text:
+                                              "Not enough values to render a chart",
+                                          color: Colors.amber,
+                                          maxsize: 15,
+                                          minsize: 11,
+                                        ),
+                                      )
+                                    : Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: TransactionsChart(
+                                            data: snapshot.data,
+                                            chartfor: "Expense",
+                                            dropDownValue: ""),
+                                      ),
+
+                                // datasetExpense.length < 2
+                                //     ? const Center(
+                                //         child: TextWidget(
+                                //           text:
+                                //               "Not enough values to render a chart",
+                                //           color: Colors.amber,
+                                //           maxsize: 15,
+                                //           minsize: 11,
+                                //         ),
+                                //       )
+                                //     : Padding(
+                                //         padding: const EdgeInsets.all(8.0),
+                                //         child: TransactionsChart(
+                                //             data: snapshot.data,
+                                //             chartfor: "Expense"),
+                                //       ),
+                              ],
+                            ),
+                            Column(
+                              children: [
+                                sizedH10,
                                 ListView.builder(
                                     reverse: true,
                                     shrinkWrap: true,
@@ -208,13 +223,17 @@ class _ExpensepageState extends State<Expensepage>
                                     itemBuilder: (context, index) {
                                       TransactionModel dataAtindex =
                                           snapshot.data![index];
-                                        if (dataAtindex.type == 'Expense') {
-                                        return filterExpenseandIncome(dataAtindex, tappedMonth, dropdownValue, index, todayDate);
+                                      if (dataAtindex.type == 'Expense') {
+                                        return filterExpenseandIncome(
+                                          dataAtindex,
+                                          tappedMonth,
+                                          dropdownValue,
+                                          index,
+                                        );
                                       } else {
                                         return const SizedBox();
                                       }
-                                    }
-                                    ),
+                                    }),
                               ],
                             )
                           ],
@@ -248,7 +267,3 @@ class _ExpensepageState extends State<Expensepage>
         ));
   }
 }
-
-
-
-
