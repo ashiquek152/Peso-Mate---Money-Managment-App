@@ -28,6 +28,7 @@ class _IncomespageState extends State<Incomespage>
   var dropdownValue = "All";
   final todayDate = DateTime.now();
   int tappedMonth = DateTime.now().month;
+  bool pressed=false;
 
   @override
   void initState() {
@@ -246,13 +247,15 @@ class _IncomespageState extends State<Incomespage>
   }
 
   TextButton selectMonth({required int monthNum, required String month}) {
+ 
     return TextButton(
-        style: buttonStyle(color: amber, radius: 20),
         onPressed: () {
           setState(() {
             tappedMonth = monthNum;
+            pressed=true;            
           });
         },
+        style: buttonStyle(color: pressed==false?Colors.blue:amber, radius: 20),
         child: TextWidget(
           text: month,
           maxsize: 15,

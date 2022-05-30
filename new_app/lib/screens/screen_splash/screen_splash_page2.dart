@@ -46,8 +46,8 @@ class _Splashpage2State extends State<Splashpage2> {
       });
     });
     Timer(const Duration(milliseconds: 3650), () {
-      setState(() {
-                   checkLogin();
+      setState(() { 
+        checkLogin();
       });
     });
 

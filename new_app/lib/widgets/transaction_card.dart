@@ -26,9 +26,11 @@ class _CardsState extends State<Cards> {
   @override
   Widget build(BuildContext context) {
     double _w = MediaQuery.of(context).size.width;
+    double _h = MediaQuery.of(context).size.height;
+    print("$_w and $_h" );
+
     selectedDate = widget.data.dateTime;
     String date = "${selectedDate!.day} ${monthsList[selectedDate!.month - 1]}";
-
     return pageIndex!=1?
     Slidable(
         direction: Axis.horizontal,
@@ -96,14 +98,14 @@ class _CardsState extends State<Cards> {
                 sizedW10,
                 Container(
                   alignment: Alignment.centerLeft,
-                  width: _w / 2.5,
+                  width: _w / 2.8,
                   child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       TextWidget(
                         text: '${widget.data.amount}',
-                        minsize: 14,
+                        minsize: 18,
                         maxsize: 20,
                         fontWeight: FontWeight.w600,
                         color: Colors.black.withOpacity(.7),
@@ -119,11 +121,13 @@ class _CardsState extends State<Cards> {
                     ],
                   ),
                 ),
-                TextWidget(
-                  text: widget.data.category,
-                  color: scaffoldbgnew,
-                  minsize: 5,
-                  maxsize: 18,
+                Expanded(
+                  child: TextWidget(
+                    text: widget.data.category,
+                    color: scaffoldbgnew,
+                    minsize: 16,
+                    maxsize: 25,
+                  ),
                 ),
               ],
             ),

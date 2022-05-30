@@ -5,6 +5,7 @@ import 'package:new_app/screens/screen_home/screen_home.dart';
 import 'package:new_app/screens/screen_settings/about_dialoge/about_dialog.dart';
 import 'package:new_app/screens/screen_settings/wipe_data/wipe_app_data.dart';
 import 'package:new_app/widgets/colors.dart';
+import 'package:new_app/widgets/sized_boxes.dart';
 import 'package:new_app/widgets/text_widget.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
@@ -59,10 +60,13 @@ class _SettingsTilesState extends State<SettingsTiles>
       onTap: () {
         switch (widget.tileIndex) {
           case 1:
-            ontapAbout(context); // Working properly
+            ontapAbout(context); 
+            break;
+          case 2: 
+            ontapNotification(context);
             break;
           case 3:
-            wipeAppdata(context); // Working properly
+            wipeAppdata(context);
             break;
         }
       },
@@ -80,7 +84,6 @@ class _SettingsTilesState extends State<SettingsTiles>
           borderRadius: BorderRadius.circular(20),
         ),
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             CircleAvatar(
                 backgroundColor: scaffoldbgnew.withOpacity(.1),
@@ -90,15 +93,17 @@ class _SettingsTilesState extends State<SettingsTiles>
                   color: amber,
                   size: 35,
                 )),
+                sizedW10,
             Container(
               alignment: Alignment.centerLeft,
-              width: widget._w / 2,
+              width: widget._w / 2.5,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  
                   Text(
-                    widget.title,
+                     widget.title,
                     textScaleFactor: 1.3,
                     style: TextStyle(
                       fontFamily: fontComforataa,
@@ -109,28 +114,7 @@ class _SettingsTilesState extends State<SettingsTiles>
                 ],
               ),
             ),
-            widget.tileIndex == 2
-                ? SizedBox(
-                    width: 40,
-                    height: 40,
-                    child: Switch(
-                        activeColor: amber,
-                        inactiveThumbColor: scaffoldbgnew,
-                        value: switchButtonstate,
-                        onChanged: (value) {
-                          setState(() {
-                            switchButtonstate = !switchButtonstate;
-                          });
-                          if (switchButtonstate == true) {
-                            // ignore: void_checks
-                            return pickNotificationTime(context: context);
-                          }
-                        }),
-                  )
-                : const SizedBox(
-                    width: 40,
-                    height: 40,
-                  ),
+            const SizedBox(width: 40),
           ],
         ),
       ),
@@ -143,6 +127,48 @@ class _SettingsTilesState extends State<SettingsTiles>
   //
   //
   //
+  ontapNotification(context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return  SimpleDialog(
+          backgroundColor: scfldWhite,
+          title: const Text(
+            "Set Notifications",
+            style: TextStyle(color: amber, fontSize: 18),
+          ),
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                ElevatedButton(onPressed: ()async{
+                 await pickNotificationTime(context: context);
+                 Navigator.of(context).pop();
+                }, child: const Text("Add")),
+                ElevatedButton(onPressed: ()async{
+                await NotificationApi.cancellNotifications();
+                 Fluttertoast.showToast(
+                   backgroundColor: red,
+                   msg:"All notifications cleared");
+                 Navigator.of(context).pop();
+                }, child: const Text("Cancel Notifications")),
+              ],
+            )
+          ],
+        );
+      },
+    );
+  }
+
+
+
+
+  // 
+  // 
+  // 
+  // 
+  // 
+
   ontapNotifications(context) {
     showModalBottomSheet<void>(
       context: context,

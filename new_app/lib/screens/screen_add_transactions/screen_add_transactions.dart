@@ -122,6 +122,7 @@ class _AddTransactionState extends State<AddTransactionPage>
                                             ? 'Please enter a category '
                                             : null;
                                       },
+                                      maxLength: 20,
                                       decoration: textFiledDecorations(
                                           "Category...",
                                           Icons.category_outlined),

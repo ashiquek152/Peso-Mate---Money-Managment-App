@@ -20,8 +20,8 @@ class TransactionsChart extends StatefulWidget {
 }
 
 class _TransactionsChartState extends State<TransactionsChart> {
-  List<Color> lineColorExp = [red, amber];
-  List<Color> lineColorInc = [green, amber];
+  List<Color> lineColorExp = [amber, red];
+  List<Color> lineColorInc = [amber,green];
 
   @override
   Widget build(BuildContext context) {
@@ -57,7 +57,7 @@ class _TransactionsChartState extends State<TransactionsChart> {
                   preventCurveOverShooting: true,
                   spots: getChartPoints(widget.data),
                   isCurved: true,
-                  gradient: LinearGradient(colors: lineColorExp),
+                  gradient: LinearGradient(colors: pageIndex==4?lineColorExp:lineColorInc),
                   barWidth: 5,
                   color: red,
                   belowBarData: BarAreaData(show: true),

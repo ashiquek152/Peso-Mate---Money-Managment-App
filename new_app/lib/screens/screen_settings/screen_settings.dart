@@ -16,7 +16,7 @@ class _SettingspageState extends State<Settingspage> {
     double _w = MediaQuery.of(context).size.width;
 
     return Scaffold(
-       appBar: const PreferredSize(
+      appBar: const PreferredSize(
           preferredSize: Size.fromHeight(50),
           child: AppBarcommon(
             pageHeading: "Settings",

@@ -35,13 +35,13 @@ class TopContainer extends StatelessWidget {
               sizedW10,
               greetings(),
               SizedBox(
-                width: mqW / 20,
+                width: mqW / 50,
               ),
               TextWidget(
                 text: "$usernameEntered",
                 color: scaffoldbgnew,
-                maxsize: 20,
-                minsize: 16,
+                maxsize: 22,
+                minsize: 20,
               ),
             ],
           ),
@@ -64,7 +64,6 @@ class TopContainer extends StatelessWidget {
                 ),
                 TextWidget(
                   text: "₹ ${totalBalance < 0 ? 0 : totalBalance} ",
-                  //
                   fontWeight: FontWeight.bold,
                   color: scaffoldbgnew,
                   family: "Delius",
@@ -91,23 +90,22 @@ class TopContainer extends StatelessWidget {
                       borderRadius: BorderRadius.circular(5), color: white),
                   padding: const EdgeInsets.all(10),
                   child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       const TextWidget(
                         text: "Total Income",
                         color: scaffoldbgnew,
                         fontWeight: FontWeight.bold,
-                        maxsize: 20,
-                        minsize: 16,
+                        maxsize: 22,
+                        minsize: 20,
                       ),
                       TextWidget(
                         text: "₹ $totalIncome",
-                        //
                         fontWeight: FontWeight.bold,
                         color: scaffoldbgnew,
                         family: "Delius",
-                        maxsize: 30,
-                        minsize: 20,
+                          maxsize: 30,
+                        minsize: 18,
                       ),
                     ],
                   ),
@@ -126,14 +124,14 @@ class TopContainer extends StatelessWidget {
                       borderRadius: BorderRadius.circular(5), color: white),
                   padding: const EdgeInsets.all(10),
                   child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       const TextWidget(
                         text: "Total Expense",
                         color: scaffoldbgnew,
                         fontWeight: FontWeight.bold,
-                        maxsize: 20,
-                        minsize: 16,
+                        maxsize: 22,
+                        minsize: 20,
                       ),
                       TextWidget(
                         text: "₹ $totalExpense",
@@ -141,7 +139,7 @@ class TopContainer extends StatelessWidget {
                         color: scaffoldbgnew,
                         family: "Delius",
                         maxsize: 30,
-                        minsize: 20,
+                        minsize: 18,
                       ),
                     ],
                   ),
