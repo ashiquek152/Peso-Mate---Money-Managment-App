@@ -8,7 +8,6 @@ import 'package:new_app/screens/screen_home/screen_home.dart';
 import 'package:new_app/widgets/button_style.dart';
 import 'package:new_app/widgets/colors.dart';
 import 'package:new_app/widgets/fl_chart/fl_chart.dart';
-import 'package:new_app/widgets/fl_chart/fl_chart_functions.dart';
 import 'package:new_app/widgets/global_variables.dart';
 import 'package:new_app/widgets/painter_class.dart';
 import 'package:new_app/widgets/sized_boxes.dart';
@@ -89,13 +88,13 @@ class _IncomespageState extends State<Incomespage>
                     if (snapshot.data == null) {
                       return const Text('Nothing found');
                     } else {
-                      getChartPoints(snapshot.data!,"Income",dropdownValue);
+                      // getChartPoints(snapshot.data!);
                       return SingleChildScrollView(
                         child: Column(
                           children: [
                             Column(
                               children: [
-                                 Padding(
+                                Padding(
                                   padding: const EdgeInsets.all(8.0),
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.end,
@@ -146,21 +145,10 @@ class _IncomespageState extends State<Incomespage>
                                     ],
                                   ),
                                 ),
-                                sizedH10,                                
-                                datasetIncome.length < 2
-                                    ? const Center(
-                                        child: TextWidget(
-                                        text:
-                                            "Not enough values to render a chart",
-                                        color: Colors.amber,
-                                        maxsize: 15,
-                                        minsize: 11,
-                                      ))
-                                    : TransactionsChart(
-                                      dropDownValue: dropdownValue,
+                                sizedH10,
+                                     TransactionsChart(
                                         data: snapshot.data,
                                         chartfor: "Income"),
-                               
                               ],
                             ),
                             Column(
@@ -230,7 +218,11 @@ class _IncomespageState extends State<Incomespage>
                                       TransactionModel dataAtindex =
                                           snapshot.data![index];
                                       if (dataAtindex.type == 'Income') {
-                                        return filterExpenseandIncome(dataAtindex, tappedMonth, dropdownValue, index);
+                                        return filterExpenseandIncome(
+                                            dataAtindex,
+                                            tappedMonth,
+                                            dropdownValue,
+                                            index);
                                       } else {
                                         return const SizedBox();
                                       }

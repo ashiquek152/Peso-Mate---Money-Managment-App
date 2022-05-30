@@ -64,4 +64,7 @@ class NotificationApi {
         ? scheduledDate.add(const Duration(days: 1))
         : scheduledDate;
   }
+  cancellNotifications() async {
+    await FlutterLocalNotificationsPlugin().cancelAll();
+  }
 }

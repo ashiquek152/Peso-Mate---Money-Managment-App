@@ -5,8 +5,8 @@ import 'package:new_app/screens/screen_home/screen_home.dart';
 import 'package:new_app/screens/screen_settings/about_dialoge/about_dialog.dart';
 import 'package:new_app/screens/screen_settings/wipe_data/wipe_app_data.dart';
 import 'package:new_app/widgets/colors.dart';
-import 'package:new_app/widgets/snackbar.dart';
 import 'package:new_app/widgets/text_widget.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class SettingsTiles extends StatefulWidget {
   const SettingsTiles({
@@ -19,7 +19,7 @@ class SettingsTiles extends StatefulWidget {
   })  : _w = w,
         super(key: key);
 
-  final double _w;
+  final double _w ;
   final String title;
   final IconData avatar;
   final String? contents;
@@ -34,6 +34,7 @@ class _SettingsTilesState extends State<SettingsTiles>
   bool isTapped = false;
   TimeOfDay? pickedTIme;
   final timeRightNow = TimeOfDay.now();
+  bool switchButtonstate = false;
 
   @override
   void initState() {
@@ -41,13 +42,15 @@ class _SettingsTilesState extends State<SettingsTiles>
     listenNotifications();
     super.initState();
   }
-      listenNotifications(){
-        NotificationApi.onNotifications.listen(onclickNotifications);
-      
-    }
-    onclickNotifications(String? payload){
-      Navigator.of(context).pushReplacement(MaterialPageRoute(builder:  (context) => const Homepage()));
-    }
+
+  listenNotifications() {
+    NotificationApi.onNotifications.listen(onclickNotifications);
+  }
+
+  onclickNotifications(String? payload) {
+    Navigator.of(context).pushReplacement(
+        MaterialPageRoute(builder: (context) => const Homepage()));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -57,9 +60,6 @@ class _SettingsTilesState extends State<SettingsTiles>
         switch (widget.tileIndex) {
           case 1:
             ontapAbout(context); // Working properly
-            break;
-          case 2:
-            timePicking(context: context);
             break;
           case 3:
             wipeAppdata(context); // Working properly
@@ -99,7 +99,7 @@ class _SettingsTilesState extends State<SettingsTiles>
                 children: [
                   Text(
                     widget.title,
-                    textScaleFactor: 1.6,
+                    textScaleFactor: 1.3,
                     style: TextStyle(
                       fontFamily: fontComforataa,
                       fontWeight: FontWeight.w600,
@@ -109,6 +109,28 @@ class _SettingsTilesState extends State<SettingsTiles>
                 ],
               ),
             ),
+            widget.tileIndex == 2
+                ? SizedBox(
+                    width: 40,
+                    height: 40,
+                    child: Switch(
+                        activeColor: amber,
+                        inactiveThumbColor: scaffoldbgnew,
+                        value: switchButtonstate,
+                        onChanged: (value) {
+                          setState(() {
+                            switchButtonstate = !switchButtonstate;
+                          });
+                          if (switchButtonstate == true) {
+                            // ignore: void_checks
+                            return pickNotificationTime(context: context);
+                          }
+                        }),
+                  )
+                : const SizedBox(
+                    width: 40,
+                    height: 40,
+                  ),
           ],
         ),
       ),
@@ -139,7 +161,7 @@ class _SettingsTilesState extends State<SettingsTiles>
               ),
               ElevatedButton(
                 child: const Text('Set Time'),
-                onPressed: () => timePicking(context: context),
+                onPressed: () => pickNotificationTime(context: context),
               )
             ],
           ),
@@ -152,19 +174,28 @@ class _SettingsTilesState extends State<SettingsTiles>
   //
   //
   //
-  timePicking({required context}) async {
+
+  pickNotificationTime({required context}) async {
     pickedTIme = await showTimePicker(
         helpText: "Set time for notification",
         initialEntryMode: TimePickerEntryMode.dial,
         context: context,
         initialTime: timeRightNow);
     if (pickedTIme != null && pickedTIme != timeRightNow) {
+      String amORpm=pickedTIme!.hour>12?"PM":"AM";
+      Fluttertoast.showToast(
+        backgroundColor:red,
+        gravity: ToastGravity.SNACKBAR,
+        msg: "Notification set at ${pickedTIme!.hour>12? pickedTIme!.hour-12:pickedTIme!.hour }:${pickedTIme!.minute} $amORpm");
       NotificationApi.showScheduledNotifications(
           title: "Peso Mate",
           body: "You forgot to add something",
           scheduledTime: Time(pickedTIme!.hour, pickedTIme!.minute, 0));
-      Navigator.of(context).pop();
-      snackbar(content: "Notification added", color: amber);
+      
+    } else {
+      setState(() {
+        switchButtonstate = false;
+      });
     }
   }
 }

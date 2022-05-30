@@ -4,13 +4,13 @@ import 'package:new_app/db_helper/transactions_model.dart';
 import 'package:new_app/screens/screen_home/screen_home.dart';
 import 'package:new_app/widgets/button_style.dart';
 import 'package:new_app/widgets/colors.dart';
-import 'package:new_app/widgets/common_%20appbar.dart';
+import 'package:new_app/widgets/common_appbar.dart';
 import 'package:new_app/widgets/container_decoration.dart';
 import 'package:new_app/widgets/global_variables.dart';
 import 'package:new_app/widgets/months_list.dart';
 import 'package:new_app/widgets/painter_class.dart';
 import 'package:new_app/widgets/sized_boxes.dart';
-import 'package:new_app/widgets/snackbar.dart';
+import 'package:new_app/widgets/toast.dart';
 import 'package:new_app/widgets/text_widget.dart';
 import 'package:new_app/widgets/textfield_border.dart';
 
@@ -77,98 +77,105 @@ class _HomescreenState extends State<Updatescreen> {
                   decoration: containerDecoration(),
                   child: Form(
                     key: formkey,
-                    child: ListView(
-                      children: [
-                        Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [
-                              sizedH40,
-                              TextFormField(
-                                  controller: amountController,
-                                  validator: (value) {
-                                    return (value == null || value.isEmpty)
-                                        ? 'Please enter an amount '
-                                        : null;
-                                  },
-                                  maxLength: 15,
-                                  decoration: textFiledDecorations("Amount...",
-                                      Icons.account_balance_wallet_outlined),
-                                  style: const TextStyle(color: scaffoldbgnew),
-                                  onChanged: (val) {
-                                    amount = int.parse(val);
-                                  },
-                                  keyboardType: TextInputType.number),
-                              TextFormField(
-                                  controller: catController,
-                                  validator: (value) {
-                                    return (value == null || value.isEmpty)
-                                        ? 'Please enter a category '
-                                        : null;
-                                  },
-                                  maxLength: 15,
-                                  decoration: textFiledDecorations(
-                                      "Category...", Icons.category_outlined),
-                                  style: const TextStyle(
-                                    color: scaffoldbgnew,
-                                  ),
-                                  onChanged: (val) {
-                                    category = val;
-                                  }),
-                              sizedH20,
-                            ]),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
+                    child: FutureBuilder<List<TransactionModel>>(
+                      future: dbHelper.fetchdata(),
+                      builder: (context,snapshot) {
+                        return ListView(
                           children: [
-                            InkWell(
-                              onTap: () {
-                                selectDate(context);
-                              },
-                              child: Container(
-                                  color: scfldWhite,
-                                  height: 50,
-                                  width: 200,
-                                  child: Center(
-                                    child: TextWidget(
-                                      text:
-                                          "${selectedDate.day} ${monthsList[selectedDate.month - 1]}",
-                                      color: scaffoldbgnew,
-                                      fontWeight: FontWeight.bold,
-                                      maxsize: 18,
-                                      minsize: 14,
-                                    ),
+                            Column(
+                                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                children: [
+                                  sizedH40,
+                                  TextFormField(
+                                      controller: amountController,
+                                      validator: (value) {
+                                        return (value == null || value.isEmpty)
+                                            ? 'Please enter an amount '
+                                            : null;
+                                      },
+                                      maxLength: 15,
+                                      decoration: textFiledDecorations("Amount...",
+                                          Icons.account_balance_wallet_outlined),
+                                      style: const TextStyle(color: scaffoldbgnew),
+                                      onChanged: (val) {
+                                        amount = int.parse(val);
+                                      },
+                                      keyboardType: TextInputType.number),
+                                  TextFormField(
+                                      controller: catController,
+                                      validator: (value) {
+                                        return (value == null || value.isEmpty)
+                                            ? 'Please enter a category '
+                                            : null;
+                                      },
+                                      maxLength: 15,
+                                      decoration: textFiledDecorations(
+                                          "Category...", Icons.category_outlined),
+                                      style: const TextStyle(
+                                        color: scaffoldbgnew,
+                                      ),
+                                      onChanged: (val) {
+                                        category = val;
+                                      }),
+                                  sizedH20,
+                                ]),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                InkWell(
+                                  onTap: () {
+                                    selectDate(context);
+                                  },
+                                  child: Container(
+                                      color: scfldWhite,
+                                      height: 50,
+                                      width: 200,
+                                      child: Center(
+                                        child: TextWidget(
+                                          text:
+                                              "${selectedDate.day} ${monthsList[selectedDate.month - 1]}",
+                                          color: scaffoldbgnew,
+                                          fontWeight: FontWeight.bold,
+                                          maxsize: 18,
+                                          minsize: 14,
+                                        ),
+                                      )),
+                                ),
+                              ],
+                            ),
+                            sizedH20,
+                            SizedBox(
+                              height: 50,
+                              child: ElevatedButton(
+                                  style: buttonStyle(color: amber),
+                                  onPressed: () async {
+                                    if ((formkey.currentState!.validate())) {
+                                      // ScaffoldMessenger.of(context).showSnackBar(
+                                      //     snackbar(
+                                      //         content: 'Data updated !',
+                                      //         color: amber));
+                                              toastMessage("Data updated !");
+
+                                      dataChanged = ValueNotifier(true);
+                                      await dbHelper.updateDB(amount!, type,
+                                          selectedDate, category, index);
+                                      Navigator.of(context).pushAndRemoveUntil(
+                                          MaterialPageRoute(builder: (ctx) {
+                                        return const Homepage();
+                                      }), (route) => false);
+                                      // getChartPoints(snapshot.data!);
+                                    }
+                                  },
+                                  child: const TextWidget(
+                                    text: "Update",
+                                    maxsize: 18,
+                                    minsize: 14,
                                   )),
                             ),
+                            sizedH20,
                           ],
-                        ),
-                        sizedH20,
-                        SizedBox(
-                          height: 50,
-                          child: ElevatedButton(
-                              style: buttonStyle(color: amber),
-                              onPressed: () async {
-                                if ((formkey.currentState!.validate())) {
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                      snackbar(
-                                          content: 'Data updated !',
-                                          color: amber));
-                                          dataChanged=ValueNotifier(true);
-                                  await dbHelper.updateDB(amount!, type,
-                                      selectedDate, category, index);
-                                  Navigator.of(context).pushAndRemoveUntil(
-                                      MaterialPageRoute(builder: (ctx) {
-                                  return  const Homepage();
-                                  
-                                  }), (route) => false);
-                                }
-                              },
-                              child: const TextWidget(
-                                text: "Update",
-                                maxsize: 18,
-                                minsize: 14,
-                              )),
-                        ),
-                        sizedH20,
-                      ],
+                        );
+                      }
                     ),
                   ),
                 ),

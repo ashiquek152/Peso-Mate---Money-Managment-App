@@ -3,12 +3,12 @@ import 'package:new_app/db_helper/db_helper.dart';
 import 'package:new_app/screens/screen_home/screen_home.dart';
 import 'package:new_app/widgets/button_style.dart';
 import 'package:new_app/widgets/colors.dart';
-import 'package:new_app/widgets/common_%20appbar.dart';
+import 'package:new_app/widgets/common_appbar.dart';
 import 'package:new_app/widgets/container_decoration.dart';
 import 'package:new_app/widgets/months_list.dart';
 import 'package:new_app/widgets/painter_class.dart';
 import 'package:new_app/widgets/sized_boxes.dart';
-import 'package:new_app/widgets/snackbar.dart';
+import 'package:new_app/widgets/toast.dart';
 import 'package:new_app/widgets/text_widget.dart';
 import 'package:new_app/widgets/textfield_border.dart';
 
@@ -57,6 +57,7 @@ class _AddTransactionState extends State<AddTransactionPage>
     _controller.forward();
     super.initState();
   }
+
   @override
   void dispose() {
     _controller.dispose();
@@ -84,8 +85,7 @@ class _AddTransactionState extends State<AddTransactionPage>
                     child: Container(
                       width: size.width * .9,
                       height: size.width * 1.1,
-                      decoration: 
-                      containerDecoration(),
+                      decoration: containerDecoration(),
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: SingleChildScrollView(
@@ -99,10 +99,15 @@ class _AddTransactionState extends State<AddTransactionPage>
                                   TextFormField(
                                       controller: amountController,
                                       validator: (value) {
-                                      return(value==null||value.isEmpty)? 'Please enter an amount ':null;
+                                        return (value == null || value.isEmpty)
+                                            ? 'Please enter an amount '
+                                            : null;
                                       },
                                       maxLength: 15,
-                                      decoration:  textFiledDecorations("Amount...", Icons .account_balance_wallet_outlined),     
+                                      decoration: textFiledDecorations(
+                                          "Amount...",
+                                          Icons
+                                              .account_balance_wallet_outlined),
                                       style:
                                           const TextStyle(color: scaffoldbgnew),
                                       onChanged: (val) {
@@ -111,56 +116,77 @@ class _AddTransactionState extends State<AddTransactionPage>
                                       keyboardType: TextInputType.number),
                                   sizedH20,
                                   TextFormField(
-                                    controller: catController,
-                                    validator: (value) {
-                                      return(value==null||value.isEmpty)? 'Please enter a category ':null;
-                                    },
-                                    decoration: textFiledDecorations("Category...", Icons.category_outlined),
-                                    style: const TextStyle(
-                                      color: scaffoldbgnew,
-                                    ),
-                                    onChanged: (val) {
-                                      category = val;
-                                    }),
+                                      controller: catController,
+                                      validator: (value) {
+                                        return (value == null || value.isEmpty)
+                                            ? 'Please enter a category '
+                                            : null;
+                                      },
+                                      decoration: textFiledDecorations(
+                                          "Category...",
+                                          Icons.category_outlined),
+                                      style: const TextStyle(
+                                        color: scaffoldbgnew,
+                                      ),
+                                      onChanged: (val) {
+                                        category = val;
+                                      }),
                                   sizedH20,
                                   Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      const SizedBox(width: 12),
-                                      ChoiceChip(
-                                        label: Text(
-                                          'Income',
-                                          style: TextStyle(
-                                              fontFamily: 'Comfortaa',
-                                              color: type == 'Income'? white:scaffoldbgnew)),
-                                        selectedColor: amber,
-                                        backgroundColor: white,
-                                        selected:
-                                            (type == 'Income') ? true : false,
-                                        onSelected: (val) {
-                                          if (val) {setState(() {type = 'Income';}); }}),
-                                      const SizedBox(width: 12),
-                                      ChoiceChip(
-                                        label: TextWidget(
-                                          maxsize: 22,
-                                          minsize: 17,
-                                          text: "Expense",
-                                          family: 'Comfortaa',
-                                          color: type == 'Expense'? white: scaffoldbgnew),
-                                        selectedColor: amber,
-                                        backgroundColor: white,
-                                        selected:type == 'Expense' ? true : false,
-                                        onSelected: (val) {
-                                          if (val) {
-                                            setState(() {
-                                              type = 'Expense';
-                                            });}})]),
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        const SizedBox(width: 12),
+                                        ChoiceChip(
+                                            label: Text('Income',
+                                                style: TextStyle(
+                                                    fontFamily: 'Comfortaa',
+                                                    color: type == 'Income'
+                                                        ? white
+                                                        : scaffoldbgnew)),
+                                            selectedColor: amber,
+                                            backgroundColor: white,
+                                            selected: (type == 'Income')
+                                                ? true
+                                                : false,
+                                            onSelected: (val) {
+                                              if (val) {
+                                                setState(() {
+                                                  type = 'Income';
+                                                });
+                                              }
+                                            }),
+                                        const SizedBox(width: 12),
+                                        ChoiceChip(
+                                            label: TextWidget(
+                                                maxsize: 22,
+                                                minsize: 17,
+                                                text: "Expense",
+                                                family: 'Comfortaa',
+                                                color: type == 'Expense'
+                                                    ? white
+                                                    : scaffoldbgnew),
+                                            selectedColor: amber,
+                                            backgroundColor: white,
+                                            selected: type == 'Expense'
+                                                ? true
+                                                : false,
+                                            onSelected: (val) {
+                                              if (val) {
+                                                setState(() {
+                                                  type = 'Expense';
+                                                });
+                                              }
+                                            })
+                                      ]),
                                   sizedH20,
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       InkWell(
-                                        onTap: () {selectDate(context); },
+                                        onTap: () {
+                                          selectDate(context);
+                                        },
                                         child: Container(
                                             color: scfldWhite,
                                             height: 50,
@@ -184,10 +210,7 @@ class _AddTransactionState extends State<AddTransactionPage>
                                       onPressed: () async {
                                         if ((addformKey1.currentState!
                                             .validate())) {
-                                          ScaffoldMessenger.of(context)
-                                              .showSnackBar(snackbar(
-                                                  content: 'Data Added !',
-                                                  color: amber));
+                                          toastMessage("Data Added !");
                                           DbHelper dbHelper = DbHelper();
                                           await dbHelper.addtoDB(amount!, type,
                                               selectedDate, category);

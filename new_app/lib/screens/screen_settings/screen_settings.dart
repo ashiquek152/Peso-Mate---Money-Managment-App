@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:new_app/screens/screen_settings/settings_tiles/settings_tiles.dart';
-import 'package:new_app/widgets/common_%20appbar.dart';
+import 'package:new_app/widgets/common_appbar.dart';
 import 'package:new_app/widgets/painter_class.dart';
 
 class Settingspage extends StatefulWidget {

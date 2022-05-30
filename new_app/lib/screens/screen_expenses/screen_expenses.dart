@@ -4,9 +4,8 @@ import 'package:new_app/db_helper/transactions_model.dart';
 import 'package:new_app/functions/filter_by_period.dart';
 import 'package:new_app/widgets/button_style.dart';
 import 'package:new_app/widgets/colors.dart';
-import 'package:new_app/widgets/common_%20appbar.dart';
+import 'package:new_app/widgets/common_appbar.dart';
 import 'package:new_app/widgets/fl_chart/fl_chart.dart';
-import 'package:new_app/widgets/fl_chart/fl_chart_functions.dart';
 import 'package:new_app/widgets/global_variables.dart';
 import 'package:new_app/widgets/painter_class.dart';
 import 'package:new_app/widgets/sized_boxes.dart';
@@ -36,7 +35,7 @@ class _ExpensepageState extends State<Expensepage>
 
   @override
   Widget build(BuildContext context) {
-    double mqH = MediaQuery.of(context).size.height;
+    // double mqH = MediaQuery.of(context).size.height;
     double mqW = MediaQuery.of(context).size.width;
     return Scaffold(
       backgroundColor: scfldWhite,
@@ -64,7 +63,6 @@ class _ExpensepageState extends State<Expensepage>
                     if (snapshot.data == null) {
                       return const Text('Nothing found');
                     } else {
-                      getChartPoints(snapshot.data, "Expense", dropdownValue);
                       return SingleChildScrollView(
                         child: Column(
                           children: [
@@ -175,24 +173,6 @@ class _ExpensepageState extends State<Expensepage>
                                   ),
                                 ),
                                 sizedH10,
-                                datasetExpense.length < 2
-                                    ? const Center(
-                                        child: TextWidget(
-                                          text:
-                                              "Not enough values to render a chart",
-                                          color: Colors.amber,
-                                          maxsize: 15,
-                                          minsize: 11,
-                                        ),
-                                      )
-                                    : Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: TransactionsChart(
-                                            data: snapshot.data,
-                                            chartfor: "Expense",
-                                            dropDownValue: ""),
-                                      ),
-
                                 // datasetExpense.length < 2
                                 //     ? const Center(
                                 //         child: TextWidget(
@@ -203,12 +183,14 @@ class _ExpensepageState extends State<Expensepage>
                                 //           minsize: 11,
                                 //         ),
                                 //       )
-                                //     : Padding(
-                                //         padding: const EdgeInsets.all(8.0),
-                                //         child: TransactionsChart(
-                                //             data: snapshot.data,
-                                //             chartfor: "Expense"),
-                                //       ),
+                                //     : 
+                                    Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: TransactionsChart(
+                                          data: snapshot.data,
+                                          chartfor: "Expense",
+                                        ),
+                                      ),
                               ],
                             ),
                             Column(

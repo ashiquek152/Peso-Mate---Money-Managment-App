@@ -9,8 +9,6 @@ import 'package:new_app/screens/screen_home/widgets/top_container.dart';
 import 'package:new_app/screens/screen_settings/screen_settings.dart';
 import 'package:new_app/widgets/button_style.dart';
 import 'package:new_app/widgets/colors.dart';
-import 'package:new_app/widgets/fl_chart/fl_chart.dart';
-import 'package:new_app/widgets/fl_chart/fl_chart_functions.dart';
 import 'package:new_app/widgets/global_variables.dart';
 import 'package:new_app/widgets/painter_class.dart';
 import 'package:new_app/widgets/sized_boxes.dart';
@@ -116,7 +114,6 @@ class _MyCustomUIState extends State<Homepage>
                 return const Center(child: Text('Nothing found'));
               } else {
                 getTotalBalance(snapshot.data!);
-                getChartPoints(snapshot.data!, "Expense", "All");
               }
               return Stack(children: [
                 ListView(
@@ -128,27 +125,6 @@ class _MyCustomUIState extends State<Homepage>
                           totalBalance: totalBalance,
                           totalIncome: totalIncome,
                           totalExpense: totalExpense),
-                          sizedH10,
-                           Text(
-                            'Expense',
-                            style: TextStyle(
-                                fontFamily: 'Comfortaa',
-                                fontSize: mqW / 20,
-                                color: amber,
-                                fontWeight: FontWeight.bold),
-                          ),
-                          sizedH10,
-                      datasetExpense.length < 2
-                          ? const Center(
-                              child: TextWidget(
-                              text: "Not enough values to render a chart",
-                              color: Colors.amber,
-                              maxsize: 15,
-                              minsize: 11,
-                            ))
-                          : TransactionsChart(
-                            dropDownValue: "",
-                              data: snapshot.data!, chartfor: "Expense"),
                       sizedH10,
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -162,32 +138,32 @@ class _MyCustomUIState extends State<Homepage>
                                 fontWeight: FontWeight.bold),
                           ),
                           Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: SizedBox(
-                              height: mqH/25,
-                              width: mqW/2.5,
-                              child: ElevatedButton.icon(
-                                  icon: const Icon(
-                                      Icons.arrow_circle_right_outlined,
-                                      color: scfldWhite),
-                                  style: buttonStyle(color: amber),
-                                  label: const TextWidget(
-                                    text: "See all",
-                                    fontWeight: FontWeight.bold,
-                                    color: scfldWhite,
-                                    maxsize: 16,
-                                    minsize: 12,
-                                  ),
-                                  onPressed: () {
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) =>
-                                              const AllTransactionspage(),
-                                        )).whenComplete(() {
-                                      setState(() {});
-                                    });
-                                  }))),
+                              padding: const EdgeInsets.all(8.0),
+                              child: SizedBox(
+                                  height: mqH / 25,
+                                  width: mqW / 2.5,
+                                  child: ElevatedButton.icon(
+                                      icon: const Icon(
+                                          Icons.arrow_circle_right_outlined,
+                                          color: scfldWhite),
+                                      style: buttonStyle(color: amber),
+                                      label: const TextWidget(
+                                        text: "See all",
+                                        fontWeight: FontWeight.bold,
+                                        color: scfldWhite,
+                                        maxsize: 16,
+                                        minsize: 12,
+                                      ),
+                                      onPressed: () {
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) =>
+                                                  const AllTransactionspage(),
+                                            )).whenComplete(() {
+                                          setState(() {});
+                                        });
+                                      }))),
                         ],
                       ),
                       ListView.builder(
@@ -206,7 +182,6 @@ class _MyCustomUIState extends State<Homepage>
                               return Cards(data: dataAtindex, index: index);
                             }
                           }),
-                      
                       const SizedBox(height: 70)
                     ]),
                 CustomPaint(
@@ -226,7 +201,7 @@ class _MyCustomUIState extends State<Homepage>
     totalBalance = 0;
     totalExpense = 0;
     totalIncome = 0;
-    
+
     for (TransactionModel data in alldata) {
       if (data.type == 'Income') {
         totalBalance = totalBalance + data.amount;
