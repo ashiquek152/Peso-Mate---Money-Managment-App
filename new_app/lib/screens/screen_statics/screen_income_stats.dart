@@ -21,10 +21,21 @@ class _ScreenIncomeStatsState extends State<ScreenIncomeStats> {
   bool isButtonClicked = false;
   int selectedIndex = -1;
   int tappedMonth = DateTime.now().month;
+  int selectedTab=1;
+
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
 
   @override
   Widget build(BuildContext context) {
+
+
     return Scaffold(
+      backgroundColor: scfldWhite,
         body: SafeArea(
       child: FutureBuilder<List<TransactionModel>>(
           future: dbHelper.fetchdata(),
@@ -40,8 +51,10 @@ class _ScreenIncomeStatsState extends State<ScreenIncomeStats> {
             if (snapshot.data == null) {
               return const Text('Nothing found');
             } else {
-              getChartPoints(snapshot.data!);
-              return ListView(
+                  selectedIndex=1;
+              getChartPoints(snapshot.data!,selectedTab);
+              return
+               ListView(
                 physics: const BouncingScrollPhysics(
                     parent: AlwaysScrollableScrollPhysics()),
                 children: [
@@ -106,7 +119,11 @@ class _ScreenIncomeStatsState extends State<ScreenIncomeStats> {
                                               child: ElevatedButton(
                                                   style:
                                                       ElevatedButton.styleFrom(
-                                                          primary:selectedIndex ==index?white:amber),
+                                                          primary:
+                                                              selectedIndex ==
+                                                                      index
+                                                                  ? white
+                                                                  : amber),
                                                   onPressed: () {
                                                     setState(() {
                                                       selectedIndex = index;
@@ -115,14 +132,16 @@ class _ScreenIncomeStatsState extends State<ScreenIncomeStats> {
                                                     });
                                                   },
                                                   child: Text(
-                                                    monthsList[index].toString(),
-                                                    style: const TextStyle(color: scaffoldbgnew),
+                                                    monthsList[index]
+                                                        .toString(),
+                                                    style: const TextStyle(
+                                                        color: scaffoldbgnew),
                                                   ))));
                                     })
                               ])))),
-                  datasetExpense.isEmpty || datasetExpense.length < 2
-                      ? const Text("Not data")
-                      : TransactionsChart(data: snapshot.data!),
+                  datasetIncome.isEmpty || datasetIncome.length < 2
+                      ? const Center(child: Text("Not enough data to render a chart"))
+                      : TransactionsChart(data: snapshot.data!,selectedTab: selectedTab,),
                 ],
               );
             }

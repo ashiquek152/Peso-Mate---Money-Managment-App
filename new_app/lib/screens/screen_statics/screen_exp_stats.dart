@@ -21,10 +21,13 @@ class _ScreenIncomeStatsState extends State<ScreenExpenseStats> {
   bool isButtonClicked = false;
   int selectedIndex = -1;
   int tappedMonth = DateTime.now().month;
+  int selectedTab=2;
+
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: scfldWhite,
         body: SafeArea(
       child: FutureBuilder<List<TransactionModel>>(
           future: dbHelper.fetchdata(),
@@ -40,7 +43,7 @@ class _ScreenIncomeStatsState extends State<ScreenExpenseStats> {
             if (snapshot.data == null) {
               return const Text('Nothing found');
             } else {
-              getChartPoints(snapshot.data!);
+              getChartPoints(snapshot.data!,selectedTab);
               return ListView(
                 physics: const BouncingScrollPhysics(
                     parent: AlwaysScrollableScrollPhysics()),
@@ -139,8 +142,8 @@ class _ScreenIncomeStatsState extends State<ScreenExpenseStats> {
                     ),
                   ),
                   datasetExpense.isEmpty || datasetExpense.length < 2
-                      ? const Text("Not data")
-                      : TransactionsChart(data: snapshot.data!),
+                      ?const Center(child: Text("Not enough data to render a chart"))
+                      : TransactionsChart(data: snapshot.data!,selectedTab: selectedTab,),
                 ],
               );
             }

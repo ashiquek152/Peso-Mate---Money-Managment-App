@@ -4,7 +4,6 @@ import 'package:new_app/db_helper/transactions_model.dart';
 import 'package:new_app/functions/filter_by_period.dart';
 import 'package:new_app/widgets/colors.dart';
 import 'package:new_app/widgets/common_appbar.dart';
-import 'package:new_app/widgets/fl_chart/fl_chart.dart';
 import 'package:new_app/widgets/global_variables.dart';
 import 'package:new_app/widgets/months_list.dart';
 import 'package:new_app/widgets/painter_class.dart';
@@ -69,7 +68,6 @@ class _IncomespageState extends State<Incomespage>
                     if (snapshot.data == null) {
                       return const Text('Nothing found');
                     } else {
-                      getChartPoints(snapshot.data);
                       return SingleChildScrollView(
                           child: Column(children: [
                         Column(children: [

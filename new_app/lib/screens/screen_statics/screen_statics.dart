@@ -17,7 +17,6 @@ class _ScreenStatisticsState extends State<ScreenStatistics> {
   void initState() {
     super.initState();
   }
-
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -63,97 +62,3 @@ class _ScreenStatisticsState extends State<ScreenStatistics> {
     );
   }
 }
-
-
-
-
-// 
-// 
-// 
-// 
-// 
-// 
-
-
-//  dataSet.isEmpty || dataSet.length < 2
-//                     ? Container(
-//                         padding: EdgeInsets.symmetric(
-//                           vertical: 40.0,
-//                           horizontal: 20.0,
-//                         ),
-//                         margin: EdgeInsets.all(
-//                           12.0,
-//                         ),
-//                         decoration: BoxDecoration(
-//                           borderRadius: BorderRadius.circular(
-//                             8.0,
-//                           ),
-//                           color: Colors.white,
-//                           boxShadow: [
-//                             BoxShadow(
-//                               color: Colors.grey.withOpacity(0.5),
-//                               spreadRadius: 5,
-//                               blurRadius: 7,
-//                               offset:
-//                                   Offset(0, 3), // changes position of shadow
-//                             ),
-//                           ],
-//                         ),
-//                         child: Text(
-//                           "Not Enough Data to render Chart",
-//                           style: TextStyle(
-//                             fontSize: 20.0,
-//                           ),
-//                         ),
-//                       )
-//                     : Container(
-//                         height: 400.0,
-//                         padding: EdgeInsets.symmetric(
-//                           vertical: 40.0,
-//                           horizontal: 12.0,
-//                         ),
-//                         margin: EdgeInsets.all(
-//                           12.0,
-//                         ),
-//                         decoration: BoxDecoration(
-//                           color: Colors.white,
-//                           borderRadius: BorderRadius.only(
-//                             topLeft: Radius.circular(8),
-//                             topRight: Radius.circular(8),
-//                             bottomLeft: Radius.circular(8),
-//                             bottomRight: Radius.circular(8),
-//                           ),
-//                           boxShadow: [
-//                             BoxShadow(
-//                               color: Colors.grey.withOpacity(0.5),
-//                               spreadRadius: 5,
-//                               blurRadius: 7,
-//                               offset:
-//                                   Offset(0, 3), // changes position of shadow
-//                             ),
-//                           ],
-//                         ),
-//                         child: LineChart(
-//                           LineChartData(
-//                             borderData: FlBorderData(
-//                               show: false,
-//                             ),
-//                             lineBarsData: [
-//                               LineChartBarData(
-//                                 // spots: getPlotPoints(snapshot.data!),
-//                                 spots: getPlotPoints(snapshot.data!),
-//                                 isCurved: false,
-//                                 barWidth: 2.5,
-//                                 colors: [
-//                                   Static.PrimaryColor,
-//                                 ],
-//                                 showingIndicators: [200, 200, 90, 10],
-//                                 dotData: FlDotData(
-//                                   show: true,
-//                                 ),
-//                               ),
-//                             ],
-//                           ),
-//                         ),
-//                       ),
-//                 //
