@@ -3,15 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:new_app/db_helper/transactions_model.dart';
 import 'package:new_app/widgets/colors.dart';
 import 'package:new_app/widgets/container_decoration.dart';
-import 'package:new_app/widgets/global_variables.dart';
-
+  List<FlSpot> datasetIncome = [];
+  List<FlSpot> datasetExpense = [];
+  List<FlSpot> datasetNothing = [];
+  List tempDataset = [];
 class TransactionsChart extends StatefulWidget {
   final List<TransactionModel> data;
-  final String chartfor;
 
   const TransactionsChart({
     Key? key,
-    required this.chartfor,
     required this.data,
   }) : super(key: key);
 
@@ -29,10 +29,13 @@ class _TransactionsChartState extends State<TransactionsChart> {
         padding: const EdgeInsets.all(8.0),
         child: Container(
           decoration: containerDecoration(),
-          height: MediaQuery.of(context).size.height / 3,
-          width: MediaQuery.of(context).size.width,
+          height:MediaQuery.of(context).size.height*0.7,
+          width: MediaQuery.of(context).size.width*0.3,
           padding: const EdgeInsets.all(15.0),
+          
           child: LineChart(LineChartData(
+            // maxX:3,
+            minX: 1,
               gridData: FlGridData(
                   show: true,
                   getDrawingHorizontalLine: (value) {
@@ -57,52 +60,53 @@ class _TransactionsChartState extends State<TransactionsChart> {
                   preventCurveOverShooting: true,
                   spots: getChartPoints(widget.data),
                   isCurved: true,
-                  gradient: LinearGradient(colors: pageIndex==4?lineColorExp:lineColorInc),
+                  gradient: LinearGradient(colors:lineColorExp),
                   barWidth: 5,
                   color: red,
                   belowBarData: BarAreaData(show: true),
                 )
-              ])),
+              ]
+          )
+          ),
         ));
   }
 
-  List<FlSpot> datasetIncome = [];
-  List<FlSpot> datasetExpense = [];
-  List<FlSpot> datasetNothing = [];
-  List tempDataset = [];
 
-  DateTime todaydate = DateTime.now();
+
+  
+}
+
+DateTime todaydate = DateTime.now();
 
   List<FlSpot> getChartPoints(List<TransactionModel> alldata) {
     datasetExpense = [];
     datasetIncome = [];
 
-    if (pageIndex == 4) {
+
       for (TransactionModel data in alldata) {
         if (data.type == "Expense" && data.dateTime.month == todaydate.month) {
           tempDataset.add(data);
         }
       }
-
       tempDataset.sort((a, b) => a.dateTime.day.compareTo(b.dateTime.day));
       for (var i = 0; i < tempDataset.length; i++) {
         datasetExpense.add(FlSpot(tempDataset[i].dateTime.day.toDouble(),
             tempDataset[i].amount.toDouble()));
       }
       return datasetExpense;
-    } else if (pageIndex == 3) {
-      for (var data in alldata) {
-        if (data.type == "Income" && data.dateTime.month == todaydate.month) {
-          tempDataset.add(data);
-        }
-      }
-      tempDataset.sort((a, b) => a.dateTime.day.compareTo(b.dateTime.day));
-      for (var i = 0; i < tempDataset.length; i++) {
-        datasetIncome.add(FlSpot(tempDataset[i].dateTime.day.toDouble(),
-            tempDataset[i].amount.toDouble()));
-      }
-      return datasetIncome;
-    }
-    return datasetNothing;
+
+    // } else if (pageIndex == 3) {
+    //   for (var data in alldata) {
+    //     if (data.type == "Income" && data.dateTime.month == todaydate.month) {
+    //       tempDataset.add(data);
+    //     }
+    //   }
+    //   tempDataset.sort((a, b) => a.dateTime.day.compareTo(b.dateTime.day));
+    //   for (var i = 0; i < tempDataset.length; i++) {
+    //     datasetIncome.add(FlSpot(tempDataset[i].dateTime.day.toDouble(),
+    //         tempDataset[i].amount.toDouble()));
+    //   }
+    //   return datasetIncome;
+    
+    // return datasetNothing;
   }
-}

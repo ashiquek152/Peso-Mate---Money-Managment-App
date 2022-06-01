@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:new_app/db_helper/db_helper.dart';
-import 'package:new_app/screens/screen_splash/screen_splash_page1.dart';
+import 'package:new_app/screens/screen_splash/screen_splash_page2.dart';
 import 'package:new_app/widgets/button_style.dart';
 import 'package:new_app/widgets/colors.dart';
 Future<dynamic> wipeAppdata(context) {
@@ -21,7 +21,7 @@ Future<dynamic> wipeAppdata(context) {
                   dbHelper.deleteSharedPref();
                   Navigator.of(context).pushAndRemoveUntil(
                       MaterialPageRoute(
-                          builder: (context) => const SplashPage1()),
+                          builder: (context) => const Splashpage2()),
                       (route) => false);
                 },
                 child: const Text(
@@ -33,7 +33,7 @@ Future<dynamic> wipeAppdata(context) {
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
-                child: const Text(
+                child:  Text(
                   "Cancel",
                   style: TextStyle(color: amber),
                 ))

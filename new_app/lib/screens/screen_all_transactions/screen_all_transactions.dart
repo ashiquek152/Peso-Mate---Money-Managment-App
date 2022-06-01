@@ -35,7 +35,7 @@ class _AllTransactionspageState extends State<AllTransactionspage>
   @override
   Widget build(BuildContext context) {
     double _w = MediaQuery.of(context).size.width;
-    double _h = MediaQuery.of(context).size.width;
+    // double _h = MediaQuery.of(context).size.width;
 
     return Scaffold(
       backgroundColor: scfldWhite,
@@ -43,6 +43,7 @@ class _AllTransactionspageState extends State<AllTransactionspage>
           preferredSize: Size.fromHeight(50),
           child: AppBarcommon(
             pageHeading: "All Transactions",
+            actionVisiblity: false,
           )),
       body: Stack(
         children: [
@@ -82,7 +83,7 @@ class _AllTransactionspageState extends State<AllTransactionspage>
                                           dropdownColor: amber,
                                           iconSize: 30,
                                           iconEnabledColor: scaffoldbgnew,
-                                          hint: const Padding(
+                                          hint:  const Padding(
                                               padding:
                                                   EdgeInsets.only(left: 10),
                                               child: TextWidget(

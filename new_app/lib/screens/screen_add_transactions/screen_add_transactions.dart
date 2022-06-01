@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:new_app/db_helper/db_helper.dart';
 import 'package:new_app/screens/screen_home/screen_home.dart';
 import 'package:new_app/widgets/button_style.dart';
@@ -71,165 +72,178 @@ class _AddTransactionState extends State<AddTransactionPage>
       extendBodyBehindAppBar: true,
       appBar: const PreferredSize(
           preferredSize: Size.fromHeight(50),
-          child: AppBarcommon(pageHeading: "Add Transactions")),
-      body: Stack(
-        children: [
-          ScrollConfiguration(
-            behavior: MyBehavior(),
-            child: SingleChildScrollView(
-              child: SizedBox(
-                height: size.height,
-                child: Transform.scale(
-                  scale: _transform.value,
-                  child: Center(
-                    child: Container(
-                      width: size.width * .9,
-                      height: size.width * 1.1,
-                      decoration: containerDecoration(),
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: SingleChildScrollView(
-                          child: Form(
-                            key: addformKey1,
-                            child: Column(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
-                                children: [
-                                  sizedH20,
-                                  TextFormField(
-                                      controller: amountController,
-                                      validator: (value) {
-                                        return (value == null || value.isEmpty)
-                                            ? 'Please enter an amount '
-                                            : null;
-                                      },
-                                      maxLength: 15,
-                                      decoration: textFiledDecorations(
-                                          "Amount...",
-                                          Icons
-                                              .account_balance_wallet_outlined),
-                                      style:
-                                          const TextStyle(color: scaffoldbgnew),
-                                      onChanged: (val) {
-                                        amount = int.parse(val);
-                                      },
-                                      keyboardType: TextInputType.number),
-                                  sizedH20,
-                                  TextFormField(
-                                      controller: catController,
-                                      validator: (value) {
-                                        return (value == null || value.isEmpty)
-                                            ? 'Please enter a category '
-                                            : null;
-                                      },
-                                      maxLength: 20,
-                                      decoration: textFiledDecorations(
-                                          "Category...",
-                                          Icons.category_outlined),
-                                      style: const TextStyle(
-                                        color: scaffoldbgnew,
-                                      ),
-                                      onChanged: (val) {
-                                        category = val;
-                                      }),
-                                  sizedH20,
-                                  Row(
+          child: AppBarcommon(pageHeading: "Add Transactions",actionVisiblity: false,)),
+      body: SafeArea(
+        child: Stack(
+          children: [
+            ScrollConfiguration(
+              behavior: MyBehavior(),
+              child: SingleChildScrollView(
+                child: SizedBox(
+                  height: size.height,
+                  child: Transform.scale(
+                    scale: _transform.value,
+                    child: Center(
+                      child: Container(
+                        width: size.width * .9,
+                        height: size.width * 1.1,
+                        decoration: containerDecoration(),
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: SingleChildScrollView(
+                            child: Form(
+                              key: addformKey1,
+                              child: Column(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    sizedH20,
+                                    TextFormField(
+                                        controller: amountController,
+                                        validator: (value) {
+                                          return (value == null ||
+                                                  value.isEmpty)
+                                              ? 'Please enter an amount '
+                                              : null;
+                                        },
+                                        maxLength: 15,
+                                        decoration: textFiledDecorations(
+                                            "Amount...",
+                                            Icons
+                                                .account_balance_wallet_outlined),
+                                        style: const TextStyle(
+                                            color: scaffoldbgnew),
+                                        onChanged: (val) {
+                                          amount = int.parse(val);
+                                        },
+                                        inputFormatters: [
+                                          FilteringTextInputFormatter.allow(
+                                              RegExp("[0-9]")),
+                                        ],
+                                        keyboardType: const TextInputType.numberWithOptions(decimal: true)),
+                                    sizedH20,
+                                    TextFormField(
+                                        controller: catController,
+                                        validator: (value) {
+                                          return (value == null ||
+                                                  value.isEmpty)
+                                              ? 'Please enter a category '
+                                              : null;
+                                        },
+                                        maxLength: 20,
+                                        decoration: textFiledDecorations(
+                                            "Category...",
+                                            Icons.category_outlined),
+                                        style: const TextStyle(
+                                          color: scaffoldbgnew,
+                                        ),
+                                        inputFormatters: [
+                                          FilteringTextInputFormatter.allow(
+                                              RegExp("[a-zA-Z]")),
+                                        ],
+                                        onChanged: (val) {
+                                          category = val;
+                                        }),
+                                    sizedH20,
+                                    Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          const SizedBox(width: 12),
+                                          ChoiceChip(
+                                              label: Text('Income',
+                                                  style: TextStyle(
+                                                      fontFamily: 'Comfortaa',
+                                                      color: type == 'Income'
+                                                          ? white
+                                                          : scaffoldbgnew)),
+                                              selectedColor: amber,
+                                              backgroundColor: white,
+                                              selected: (type == 'Income')
+                                                  ? true
+                                                  : false,
+                                              onSelected: (val) {
+                                                if (val) {
+                                                  setState(() {
+                                                    type = 'Income';
+                                                  });
+                                                }
+                                              }),
+                                          const SizedBox(width: 12),
+                                          ChoiceChip(
+                                              label: TextWidget(
+                                                  maxsize: 22,
+                                                  minsize: 17,
+                                                  text: "Expense",
+                                                  family: 'Comfortaa',
+                                                  color: type == 'Expense'
+                                                      ? white
+                                                      : scaffoldbgnew),
+                                              selectedColor: amber,
+                                              backgroundColor: white,
+                                              selected: type == 'Expense'
+                                                  ? true
+                                                  : false,
+                                              onSelected: (val) {
+                                                if (val) {
+                                                  setState(() {
+                                                    type = 'Expense';
+                                                  });
+                                                }
+                                              })
+                                        ]),
+                                    sizedH20,
+                                    Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.center,
                                       children: [
-                                        const SizedBox(width: 12),
-                                        ChoiceChip(
-                                            label: Text('Income',
-                                                style: TextStyle(
-                                                    fontFamily: 'Comfortaa',
-                                                    color: type == 'Income'
-                                                        ? white
-                                                        : scaffoldbgnew)),
-                                            selectedColor: amber,
-                                            backgroundColor: white,
-                                            selected: (type == 'Income')
-                                                ? true
-                                                : false,
-                                            onSelected: (val) {
-                                              if (val) {
-                                                setState(() {
-                                                  type = 'Income';
-                                                });
-                                              }
-                                            }),
-                                        const SizedBox(width: 12),
-                                        ChoiceChip(
-                                            label: TextWidget(
-                                                maxsize: 22,
-                                                minsize: 17,
-                                                text: "Expense",
-                                                family: 'Comfortaa',
-                                                color: type == 'Expense'
-                                                    ? white
-                                                    : scaffoldbgnew),
-                                            selectedColor: amber,
-                                            backgroundColor: white,
-                                            selected: type == 'Expense'
-                                                ? true
-                                                : false,
-                                            onSelected: (val) {
-                                              if (val) {
-                                                setState(() {
-                                                  type = 'Expense';
-                                                });
-                                              }
-                                            })
-                                      ]),
-                                  sizedH20,
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      InkWell(
-                                        onTap: () {
-                                          selectDate(context);
+                                        InkWell(
+                                          onTap: () {
+                                            selectDate(context);
+                                          },
+                                          child: Container(
+                                              color: scfldWhite,
+                                              height: 50,
+                                              width: 200,
+                                              child: Center(
+                                                child: TextWidget(
+                                                  text:
+                                                      "${selectedDate.day} ${monthsList[selectedDate.month - 1]}",
+                                                  color: scaffoldbgnew,
+                                                  fontWeight: FontWeight.bold,
+                                                  maxsize: 18,
+                                                  minsize: 14,
+                                                ),
+                                              )),
+                                        ),
+                                      ],
+                                    ),
+                                    sizedH20,
+                                    ElevatedButton(
+                                        style: buttonStyle(color: amber),
+                                        onPressed: () async {
+                                          if ((addformKey1.currentState!
+                                              .validate())) {
+                                            DbHelper dbHelper = DbHelper();
+                                            await dbHelper.addtoDB(amount!,
+                                                type, selectedDate, category);
+                                            toastMessage("Data Added !");
+                                            Navigator.of(context)
+                                                .pushAndRemoveUntil(
+                                                    MaterialPageRoute(
+                                                        builder: (context) =>
+                                                            const Homepage()),
+                                                    (route) => false);
+                                          }
                                         },
-                                        child: Container(
-                                            color: scfldWhite,
-                                            height: 50,
-                                            width: 200,
-                                            child: Center(
-                                              child: TextWidget(
-                                                text:
-                                                    "${selectedDate.day} ${monthsList[selectedDate.month - 1]}",
-                                                color: scaffoldbgnew,
-                                                fontWeight: FontWeight.bold,
-                                                maxsize: 18,
-                                                minsize: 14,
-                                              ),
-                                            )),
-                                      ),
-                                    ],
-                                  ),
-                                  sizedH20,
-                                  ElevatedButton(
-                                      style: buttonStyle(color: amber),
-                                      onPressed: () async {
-                                        if ((addformKey1.currentState!
-                                            .validate())) {
-                                          toastMessage("Data Added !");
-                                          DbHelper dbHelper = DbHelper();
-                                          await dbHelper.addtoDB(amount!, type,
-                                              selectedDate, category);
-                                          Navigator.of(context)
-                                              .pushAndRemoveUntil(
-                                                  MaterialPageRoute(
-                                                      builder: (context) =>
-                                                          const Homepage()),
-                                                  (route) => false);
-                                        }
-                                      },
-                                      child: const TextWidget(
-                                        text: "Add",
-                                        maxsize: 18,
-                                        minsize: 14,
-                                      )),
-                                  sizedH20,
-                                ]),
+                                        child:  const TextWidget(
+                                          text: "Add",
+                                          maxsize: 18,
+                                          minsize: 14,
+                                        )),
+                                    sizedH20,
+                                  ]),
+                            ),
                           ),
                         ),
                       ),
@@ -238,12 +252,12 @@ class _AddTransactionState extends State<AddTransactionPage>
                 ),
               ),
             ),
-          ),
-          CustomPaint(
-            painter: MyPainter(),
-            child: Container(height: 0),
-          ),
-        ],
+            CustomPaint(
+              painter: MyPainter(),
+              child: Container(height: 0),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -253,7 +267,7 @@ class _AddTransactionState extends State<AddTransactionPage>
       context: context,
       initialDate: selectedDate,
       firstDate: DateTime(2019, 06),
-      lastDate: DateTime.now(),
+      lastDate:  DateTime(2025, 06),
     );
     if (pickedDate != null && pickedDate != selectedDate) {
       setState(() {

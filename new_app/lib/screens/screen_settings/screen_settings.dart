@@ -20,6 +20,7 @@ class _SettingspageState extends State<Settingspage> {
           preferredSize: Size.fromHeight(50),
           child: AppBarcommon(
             pageHeading: "Settings",
+            actionVisiblity: false,
           )),
       body: Stack(
         children: [

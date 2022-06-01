@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:new_app/notification_model/notification_model.dart';
-import 'package:new_app/screens/screen_home/screen_home.dart';
 import 'package:new_app/screens/screen_settings/about_dialoge/about_dialog.dart';
 import 'package:new_app/screens/screen_settings/wipe_data/wipe_app_data.dart';
+import 'package:new_app/screens/screen_splash/screen_splash_page2.dart';
 import 'package:new_app/widgets/colors.dart';
 import 'package:new_app/widgets/sized_boxes.dart';
 import 'package:new_app/widgets/text_widget.dart';
@@ -50,7 +50,7 @@ class _SettingsTilesState extends State<SettingsTiles>
 
   onclickNotifications(String? payload) {
     Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (context) => const Homepage()));
+        MaterialPageRoute(builder: (context) => const Splashpage2()));
   }
 
   @override
@@ -133,7 +133,7 @@ class _SettingsTilesState extends State<SettingsTiles>
       builder: (BuildContext context) {
         return  SimpleDialog(
           backgroundColor: scfldWhite,
-          title: const Text(
+          title:  Text(
             "Set Notifications",
             style: TextStyle(color: amber, fontSize: 18),
           ),
@@ -141,11 +141,11 @@ class _SettingsTilesState extends State<SettingsTiles>
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                ElevatedButton(onPressed: ()async{
+                TextButton(onPressed: ()async{
                  await pickNotificationTime(context: context);
                  Navigator.of(context).pop();
-                }, child: const Text("Add")),
-                ElevatedButton(onPressed: ()async{
+                }, child:  Text("Add",style: TextStyle(color: Colors.teal.shade700),)),
+                TextButton(onPressed: ()async{
                 await NotificationApi.cancellNotifications();
                  Fluttertoast.showToast(
                    backgroundColor: red,
@@ -179,7 +179,7 @@ class _SettingsTilesState extends State<SettingsTiles>
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              const TextWidget(
+               const TextWidget(
                 text: "Add Notification",
                 minsize: 18,
                 maxsize: 20,

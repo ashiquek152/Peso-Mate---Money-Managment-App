@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:new_app/db_helper/transactions_model.dart';
 import 'package:new_app/functions/confirm_delete.dart';
 import 'package:new_app/screens/screen_update/screen_update.dart';
@@ -26,8 +27,8 @@ class _CardsState extends State<Cards> {
   @override
   Widget build(BuildContext context) {
     double _w = MediaQuery.of(context).size.width;
-    double _h = MediaQuery.of(context).size.height;
-    print("$_w and $_h" );
+    // double _h = MediaQuery.of(context).size.height;
+    // print("$_w and $_h" );
 
     selectedDate = widget.data.dateTime;
     String date = "${selectedDate!.day} ${monthsList[selectedDate!.month - 1]}";
@@ -67,7 +68,9 @@ class _CardsState extends State<Cards> {
         offset: const Offset(0, 1.2),
         child: InkWell(
           enableFeedback: true,
-          onTap: () {},
+          onTap: () {
+            pageIndex!=1?Fluttertoast.showToast(msg: "Slide left to update"):null;
+          },
           highlightColor: Colors.transparent,
           splashColor: Colors.transparent,
           child: Container(
@@ -98,14 +101,15 @@ class _CardsState extends State<Cards> {
                 sizedW10,
                 Container(
                   alignment: Alignment.centerLeft,
-                  width: _w / 2.8,
+                  width: _w / 2.7,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       TextWidget(
                         text: '${widget.data.amount}',
-                        minsize: 18,
+                        minsize: 11,
+                        defaultFont: 12,
                         maxsize: 20,
                         fontWeight: FontWeight.w600,
                         color: Colors.black.withOpacity(.7),
@@ -125,7 +129,8 @@ class _CardsState extends State<Cards> {
                   child: TextWidget(
                     text: widget.data.category,
                     color: scaffoldbgnew,
-                    minsize: 16,
+                    minsize: 10,
+                    defaultFont:14,
                     maxsize: 25,
                   ),
                 ),

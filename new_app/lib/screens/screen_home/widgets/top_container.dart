@@ -25,8 +25,7 @@ class TopContainer extends StatelessWidget {
     double mqH = MediaQuery.of(context).size.height;
     double mqW = MediaQuery.of(context).size.width;
     return SizedBox(
-      // color: red,
-      height: mqH / 2.9,
+      height: mqH / 2.6,
       child: Column(
         children: [
           sizedH20,
@@ -45,7 +44,7 @@ class TopContainer extends StatelessWidget {
               ),
             ],
           ),
-          sizedH20,
+          sizedH10,
           Container(
             height: mqH / 7.6,
             width: mqW / 1.4,
@@ -55,25 +54,27 @@ class TopContainer extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const TextWidget(
+                 const TextWidget(
                   text: "Total Balance",
                   color: scaffoldbgnew,
                   fontWeight: FontWeight.bold,
                   maxsize: 20,
-                  minsize: 16,
+                  defaultFont: 16,
+                  minsize: 12,
                 ),
                 TextWidget(
                   text: "₹ ${totalBalance < 0 ? 0 : totalBalance} ",
                   fontWeight: FontWeight.bold,
                   color: scaffoldbgnew,
                   family: "Delius",
-                  maxsize: 30,
-                  minsize: 20,
+                  maxsize: 25,
+                  defaultFont: 16,
+                  minsize: 12,
                 ),
               ],
             ),
           ),
-          sizedH20,
+          sizedH10,
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
@@ -84,7 +85,7 @@ class TopContainer extends StatelessWidget {
                   ));
                 },
                 child: Container(
-                  height: mqH / 10,
+                  height: mqH / 8.5,
                   width: mqW / 2.6,
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(5), color: white),
@@ -92,20 +93,22 @@ class TopContainer extends StatelessWidget {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      const TextWidget(
+                       const TextWidget(
                         text: "Total Income",
                         color: scaffoldbgnew,
                         fontWeight: FontWeight.bold,
-                        maxsize: 22,
-                        minsize: 20,
+                        maxsize: 20,
+                        defaultFont:14,
+                        minsize: 10,
                       ),
                       TextWidget(
                         text: "₹ $totalIncome",
                         fontWeight: FontWeight.bold,
                         color: scaffoldbgnew,
                         family: "Delius",
-                          maxsize: 30,
-                        minsize: 18,
+                        maxsize: 30,
+                        defaultFont:14,
+                        minsize: 12,
                       ),
                     ],
                   ),
@@ -118,7 +121,7 @@ class TopContainer extends StatelessWidget {
                   ));
                 },
                 child: Container(
-                  height: mqH / 10,
+                  height: mqH / 8.5,
                   width: mqW / 2.6,
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(5), color: white),
@@ -126,20 +129,22 @@ class TopContainer extends StatelessWidget {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      const TextWidget(
+                       const TextWidget(
                         text: "Total Expense",
                         color: scaffoldbgnew,
                         fontWeight: FontWeight.bold,
-                        maxsize: 22,
-                        minsize: 20,
+                         maxsize: 20,
+                        defaultFont:14,
+                        minsize: 10,
                       ),
                       TextWidget(
                         text: "₹ $totalExpense",
                         fontWeight: FontWeight.bold,
                         color: scaffoldbgnew,
                         family: "Delius",
-                        maxsize: 30,
-                        minsize: 18,
+                         maxsize: 30,
+                        defaultFont:14,
+                        minsize: 12,
                       ),
                     ],
                   ),

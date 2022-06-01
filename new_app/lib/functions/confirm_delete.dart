@@ -16,7 +16,7 @@ Future confirmDelete(alldata,index, context) async {
       return AlertDialog(
         contentTextStyle: const TextStyle(color: Colors.white),
         backgroundColor: scfldWhite,
-        title: const Text(
+        title:  Text(
           "Confirm",
           style: TextStyle(color: amber),
         ),
@@ -52,7 +52,7 @@ Future confirmDelete(alldata,index, context) async {
           TextButton(
             style: buttonStyle(color:white),
             onPressed: () => Navigator.of(context).pop(),
-            child: const Text(
+            child:  Text(
               "CANCEL",
               style: TextStyle(color: amber),
             ),

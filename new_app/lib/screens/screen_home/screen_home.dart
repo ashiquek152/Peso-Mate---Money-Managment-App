@@ -49,10 +49,10 @@ class _MyCustomUIState extends State<Homepage>
             backgroundColor: amber,
             systemOverlayStyle: SystemUiOverlayStyle.dark,
             elevation: 0,
-            title: const TextWidget(
+            title:  const TextWidget(
                 text: "Peso Mate",
                 family: 'Swera',
-                color: scaffoldbgnew,
+                color: white,
                 maxsize: 40,
                 minsize: 30),
             centerTitle: true,
@@ -101,7 +101,7 @@ class _MyCustomUIState extends State<Homepage>
               }
               if (snapshot.hasData) {
                 if (snapshot.data!.isEmpty) {
-                  return const Center(
+                  return  const Center(
                       child: TextWidget(
                     text: "Press + to add",
                     color: scaffoldbgnew,
@@ -143,15 +143,17 @@ class _MyCustomUIState extends State<Homepage>
                                   height: mqH / 25,
                                   width: mqW / 2.5,
                                   child: ElevatedButton.icon(
-                                      icon: const Icon(
+                                      icon:  Icon(
                                           Icons.arrow_circle_right_outlined,
-                                          color: scfldWhite),
+                                          color: scfldWhite,
+                                          size: mqW/15,),
                                       style: buttonStyle(color: amber),
-                                      label: const TextWidget(
+                                      label:  const TextWidget(
                                         text: "See all",
                                         fontWeight: FontWeight.bold,
                                         color: scfldWhite,
                                         maxsize: 16,
+                                        defaultFont: 14,
                                         minsize: 12,
                                       ),
                                       onPressed: () {

@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:new_app/db_helper/db_helper.dart';
 import 'package:new_app/db_helper/transactions_model.dart';
 import 'package:new_app/functions/filter_by_period.dart';
-import 'package:new_app/widgets/button_style.dart';
 import 'package:new_app/widgets/colors.dart';
 import 'package:new_app/widgets/common_appbar.dart';
 import 'package:new_app/widgets/fl_chart/fl_chart.dart';
 import 'package:new_app/widgets/global_variables.dart';
+import 'package:new_app/widgets/months_list.dart';
 import 'package:new_app/widgets/painter_class.dart';
 import 'package:new_app/widgets/sized_boxes.dart';
 import 'package:new_app/widgets/text_widget.dart';
@@ -26,6 +26,9 @@ class _ExpensepageState extends State<Expensepage>
   final todayDate = DateTime.now();
   int tappedMonth = DateTime.now().month;
   var dropdownValue = "All";
+  Color buttonColor = Colors.amber;
+  bool isButtonClicked = false;
+  int selectedIndex =-1;
 
   @override
   void initState() {
@@ -35,13 +38,15 @@ class _ExpensepageState extends State<Expensepage>
 
   @override
   Widget build(BuildContext context) {
-    // double mqH = MediaQuery.of(context).size.height;
     double mqW = MediaQuery.of(context).size.width;
     return Scaffold(
       backgroundColor: scfldWhite,
       appBar: const PreferredSize(
           preferredSize: Size.fromHeight(50),
-          child: AppBarcommon(pageHeading: "Expenses")),
+          child: AppBarcommon(
+            pageHeading: "Expenses",
+            actionVisiblity: true,
+          )),
       body: Stack(
         children: [
           ListView(
@@ -63,6 +68,7 @@ class _ExpensepageState extends State<Expensepage>
                     if (snapshot.data == null) {
                       return const Text('Nothing found');
                     } else {
+                      getChartPoints(snapshot.data);
                       return SingleChildScrollView(
                         child: Column(
                           children: [
@@ -120,77 +126,42 @@ class _ExpensepageState extends State<Expensepage>
                                   ),
                                 ),
                                 Visibility(
-                                  visible: dropdownValue == "This year"
-                                      ? true
-                                      : false,
+                                  visible: dropdownValue=="This year"?true:false,
                                   child: Container(
                                     color: Colors.transparent,
                                     height: 60,
                                     child: SingleChildScrollView(
                                       scrollDirection: Axis.horizontal,
+                                      physics: const ScrollPhysics(),
                                       child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceEvenly,
-                                        children: [
-                                          selectMonth(
-                                              monthNum: 1, month: "Jan"),
-                                          sizedW10,
-                                          selectMonth(
-                                              monthNum: 2, month: "Feb"),
-                                          sizedW10,
-                                          selectMonth(
-                                              monthNum: 3, month: "Mar"),
-                                          sizedW10,
-                                          selectMonth(
-                                              monthNum: 4, month: "Apr"),
-                                          sizedW10,
-                                          selectMonth(
-                                              monthNum: 5, month: "May"),
-                                          sizedW10,
-                                          selectMonth(
-                                              monthNum: 6, month: "Jun"),
-                                          sizedW10,
-                                          selectMonth(
-                                              monthNum: 7, month: "Jul"),
-                                          sizedW10,
-                                          selectMonth(
-                                              monthNum: 8, month: "Aug"),
-                                          sizedW10,
-                                          selectMonth(
-                                              monthNum: 9, month: "Sep"),
-                                          sizedW10,
-                                          selectMonth(
-                                              monthNum: 10, month: "Oct"),
-                                          sizedW10,
-                                          selectMonth(
-                                              monthNum: 11, month: "Nov"),
-                                          sizedW10,
-                                          selectMonth(
-                                              monthNum: 12, month: "Dec"),
+                                        children:[
+                                          ListView.builder(
+                                            scrollDirection: Axis.horizontal,
+                                              physics:
+                                                  const NeverScrollableScrollPhysics(),
+                                              shrinkWrap: true,
+                                              itemCount: monthsList.length,
+                                              itemBuilder: (context, index) {
+                                                return Padding(
+                                                  padding: const EdgeInsets.all(7.0),
+                                                  child: ElevatedButton(
+                                                    style: ElevatedButton.styleFrom(primary: selectedIndex ==index?white:amber,),
+                                                    
+                                                    onPressed: (){
+                                                      setState(() {
+                                                        selectedIndex =index;
+                                                        isButtonClicked = true;
+                                                        tappedMonth=index+1;
+                                                      });
+                                                    }, child: Text(monthsList[index].toString(),style: const TextStyle(color: scaffoldbgnew),)),
+                                                );
+                                              })
                                         ],
                                       ),
                                     ),
                                   ),
                                 ),
                                 sizedH10,
-                                // datasetExpense.length < 2
-                                //     ? const Center(
-                                //         child: TextWidget(
-                                //           text:
-                                //               "Not enough values to render a chart",
-                                //           color: Colors.amber,
-                                //           maxsize: 15,
-                                //           minsize: 11,
-                                //         ),
-                                //       )
-                                //     : 
-                                    Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: TransactionsChart(
-                                          data: snapshot.data,
-                                          chartfor: "Expense",
-                                        ),
-                                      ),
                               ],
                             ),
                             Column(
@@ -232,20 +203,5 @@ class _ExpensepageState extends State<Expensepage>
         ],
       ),
     );
-  }
-
-  TextButton selectMonth({required int monthNum, required String month}) {
-    return TextButton(
-        style: buttonStyle(color: amber, radius: 20),
-        onPressed: () {
-          setState(() {
-            tappedMonth = monthNum;
-          });
-        },
-        child: TextWidget(
-          text: month,
-          maxsize: 15,
-          minsize: 11,
-        ));
   }
 }

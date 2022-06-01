@@ -189,7 +189,7 @@ class _LoginpgageState extends State<Loginpage>
                     OutlineInputBorder(borderRadius: BorderRadius.circular(25)),
                 fillColor: white,
                 filled: true,
-                errorStyle: const TextStyle(fontSize: 13, color: amber),
+                errorStyle:  TextStyle(fontSize: 13, color: amber),
                 hintText: 'Enter your name...',
                 hintStyle: TextStyle(
                   fontSize: 16,
