@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:new_app/db_helper/db_helper.dart';
 import 'package:new_app/db_helper/transactions_model.dart';
+import 'package:new_app/screens/screen_all_transactions/screen_all_transactions.dart';
+import 'package:new_app/screens/screen_expenses/screen_expenses.dart';
 import 'package:new_app/screens/screen_home/screen_home.dart';
+import 'package:new_app/screens/screen_incomes/screen_incomes.dart';
 import 'package:new_app/widgets/button_style.dart';
 import 'package:new_app/widgets/colors.dart';
 import 'package:new_app/widgets/common_appbar.dart';
@@ -61,7 +64,7 @@ class _HomescreenState extends State<Updatescreen> {
         backgroundColor: scfldWhite,
         appBar: PreferredSize(
             child: AppBarcommon(
-              actionVisiblity: false,
+                actionVisiblity: false,
                 pageHeading:
                     type == "Expense" ? "Edit Expense" : "Edit Income"),
             preferredSize: const Size.fromHeight(50)),
@@ -166,11 +169,20 @@ class _HomescreenState extends State<Updatescreen> {
                                             .pushAndRemoveUntil(
                                                 MaterialPageRoute(
                                                     builder: (ctx) {
-                                          return const Homepage();
+                                          switch (pageIndex) {
+                                            case 2:
+                                              return const AllTransactionspage();
+                                            case 3:
+                                              return const Incomespage();
+                                            case 4:
+                                              return const Expensepage();
+                                            default:
+                                              return const Homepage();
+                                          }
                                         }), (route) => false);
                                       }
                                     },
-                                    child:  const TextWidget(
+                                    child: const TextWidget(
                                       text: "Update",
                                       maxsize: 18,
                                       minsize: 14,

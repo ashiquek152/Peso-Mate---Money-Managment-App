@@ -8,15 +8,14 @@ import 'package:new_app/widgets/button_style.dart';
 import 'package:new_app/widgets/colors.dart';
 import 'package:new_app/widgets/global_variables.dart';
 
-Future confirmDelete(alldata,index, context) async {
-  
+Future confirmDelete(alldata, index, context) async {
   showDialog(
     context: context,
     builder: (BuildContext context) {
       return AlertDialog(
         contentTextStyle: const TextStyle(color: Colors.white),
         backgroundColor: scfldWhite,
-        title:  Text(
+        title: Text(
           "Confirm",
           style: TextStyle(color: amber),
         ),
@@ -28,15 +27,10 @@ Future confirmDelete(alldata,index, context) async {
           TextButton(
               style: buttonStyle(color: amber),
               onPressed: () {
-                
-              //  getChartPoints(alldata,pageIndex==3?"Income":"Expense");
-
                 DbHelper().deleteData(index);
                 Navigator.of(context).pushAndRemoveUntil(
                     MaterialPageRoute(builder: (ctx) {
                   switch (pageIndex) {
-                    case 1:
-                      return const Homepage();
                     case 2:
                       return const AllTransactionspage();
                     case 3:
@@ -50,9 +44,9 @@ Future confirmDelete(alldata,index, context) async {
               },
               child: const Text("DELETE")),
           TextButton(
-            style: buttonStyle(color:white),
+            style: buttonStyle(color: white),
             onPressed: () => Navigator.of(context).pop(),
-            child:  Text(
+            child: Text(
               "CANCEL",
               style: TextStyle(color: amber),
             ),

@@ -1,8 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:new_app/screens/screen_expenses/screen_expenses.dart';
 import 'package:new_app/screens/screen_home/screen_home.dart';
-import 'package:new_app/screens/screen_statics/screen_statics.dart';
+import 'package:new_app/screens/screen_incomes/screen_incomes.dart';
+import 'package:new_app/screens/screen_statics/screen_exp_stats.dart';
+import 'package:new_app/screens/screen_statics/screen_income_stats.dart';
 import 'package:new_app/widgets/colors.dart';
 import 'package:new_app/widgets/global_variables.dart';
 import 'package:new_app/widgets/text_widget.dart';
@@ -34,20 +37,38 @@ class AppBarcommon extends StatelessWidget {
         automaticallyImplyLeading: false,
         actions: [
           Visibility(
-            visible:actionVisiblity,
-            child: IconButton(onPressed: (){
-            Navigator.of(context).push(MaterialPageRoute(builder: (context) => const ScreenStatistics(),));
-                  }, icon: const Icon(Icons.auto_graph_outlined),tooltip: "Statistics"),
-          )],      
+            visible: actionVisiblity,
+            child: IconButton(
+                onPressed: () {
+                  Navigator.of(context)
+                      .push(MaterialPageRoute(builder: (context) {
+                    if (pageIndex == 3) {
+                      return const ScreenIncomeStats();
+                    } else {
+                      return const ScreenExpenseStats();
+                    }
+                  }));
+                },
+                icon: const Icon(Icons.auto_graph_outlined),
+                tooltip: "Statistics"),
+          )
+        ],
         leading: IconButton(
             enableFeedback: true,
             icon: const Icon(CupertinoIcons.arrow_left,
                 size: 30, color: scfldWhite),
             onPressed: () {
-              pageIndex!=5?Navigator.of(context).pushAndRemoveUntil(
-                  MaterialPageRoute(builder: (context) => const Homepage()),
-                  (route) => false):
-                  Navigator.of(context).pop();
+              Navigator.of(context).pushAndRemoveUntil(
+                    MaterialPageRoute(builder: (ctx) {
+                  switch (pageIndex) {
+                    case 5:
+                      return const Incomespage();
+                    case 6:
+                      return const Expensepage();
+                    default:
+                      return const Homepage();
+                  }
+                }), (route) => false);
             }));
   }
 }

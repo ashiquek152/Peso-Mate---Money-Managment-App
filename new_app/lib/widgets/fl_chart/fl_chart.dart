@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:new_app/db_helper/transactions_model.dart';
 import 'package:new_app/widgets/colors.dart';
 import 'package:new_app/widgets/container_decoration.dart';
+import 'package:new_app/widgets/global_variables.dart';
 
 List<FlSpot> datasetIncome = [];
 List<FlSpot> datasetExpense = [];
@@ -11,9 +12,9 @@ List tempDataset = [];
 
 class TransactionsChart extends StatefulWidget {
   final List<TransactionModel> data;
-  final int? selectedTab;
+
   const TransactionsChart(
-      {Key? key, required this.data, required this.selectedTab})
+      {Key? key, required this.data})
       : super(key: key);
 
   @override
@@ -58,7 +59,7 @@ class _TransactionsChartState extends State<TransactionsChart> {
               lineBarsData: [
                 LineChartBarData(
                   preventCurveOverShooting: true,
-                  spots: getChartPoints(widget.data, widget.selectedTab),
+                  spots: getChartPoints(widget.data),
                   isCurved: true,
                   gradient: LinearGradient(colors: lineColorExp),
                   barWidth: 5,
@@ -72,11 +73,11 @@ class _TransactionsChartState extends State<TransactionsChart> {
 
 DateTime todaydate = DateTime.now();
 
-List<FlSpot> getChartPoints(List<TransactionModel> alldata, selectedTab) {
+List<FlSpot> getChartPoints(List<TransactionModel> alldata) {
   datasetExpense = [];
   datasetIncome = [];
 
-  if (selectedTab == 2) {
+  if (pageIndex == 6) {
     for (TransactionModel data in alldata) {
       if (data.type == "Expense" && data.dateTime.month == todaydate.month) {
         tempDataset.add(data);
@@ -87,8 +88,9 @@ List<FlSpot> getChartPoints(List<TransactionModel> alldata, selectedTab) {
       datasetExpense.add(FlSpot(tempDataset[i].dateTime.day.toDouble(),
           tempDataset[i].amount.toDouble()));
     }
+    tempDataset.clear();
     return datasetExpense;
-  } else if (selectedTab == 1) {
+  } else if (pageIndex == 5) {
     for (TransactionModel data in alldata) {
       if (data.type == "Income" && data.dateTime.month == todaydate.month) {
         tempDataset.add(data);
@@ -99,6 +101,7 @@ List<FlSpot> getChartPoints(List<TransactionModel> alldata, selectedTab) {
       datasetIncome.add(FlSpot(tempDataset[i].dateTime.day.toDouble(),
           tempDataset[i].amount.toDouble()));
     }
+    tempDataset.clear();
   return datasetIncome;
   }
   return datasetNothing;
