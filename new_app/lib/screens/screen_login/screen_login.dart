@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:new_app/screens/screen_home/screen_home.dart';
 import 'package:new_app/widgets/colors.dart';
+import 'package:new_app/widgets/text_widget.dart';
 import 'package:new_app/widgets/textfield_border.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -85,7 +86,7 @@ class _LoginpgageState extends State<Loginpage>
                             fontSize: 25,
                             fontWeight: FontWeight.w600,
                             color: scaffoldbgnew,
-                            fontFamily: "Comfortaa"),
+                            fontFamily: fontComforataa),
                       ),
                       component1(
                           Icons.account_circle_outlined, 'Enter your name...'),

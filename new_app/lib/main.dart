@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:new_app/screens/screen_home/screen_home.dart';
+import 'package:new_app/screens/screen_splash/screen_splash_page2.dart';
 import 'package:timezone/data/latest.dart'as tz;
 
 void main() async {
@@ -26,7 +26,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blueGrey,
       ),
-      home:   const Homepage(),
+      home:   const Splashpage2(),
     );
   }
 }

@@ -1,11 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:new_app/screens/screen_expenses/screen_expenses.dart';
 import 'package:new_app/screens/screen_home/screen_home.dart';
-import 'package:new_app/screens/screen_incomes/screen_incomes.dart';
-import 'package:new_app/screens/screen_statics/screen_exp_stats.dart';
-import 'package:new_app/screens/screen_statics/screen_income_stats.dart';
+import 'package:new_app/screens/screen_statics/screen_statistics.dart';
 import 'package:new_app/widgets/colors.dart';
 import 'package:new_app/widgets/global_variables.dart';
 import 'package:new_app/widgets/text_widget.dart';
@@ -43,9 +40,9 @@ class AppBarcommon extends StatelessWidget {
                   Navigator.of(context)
                       .push(MaterialPageRoute(builder: (context) {
                     if (pageIndex == 3) {
-                      return const ScreenIncomeStats();
+                      return const ScreenStatistics();
                     } else {
-                      return const ScreenExpenseStats();
+                      return const ScreenStatistics();
                     }
                   }));
                 },
@@ -58,17 +55,8 @@ class AppBarcommon extends StatelessWidget {
             icon: const Icon(CupertinoIcons.arrow_left,
                 size: 30, color: scfldWhite),
             onPressed: () {
-              Navigator.of(context).pushAndRemoveUntil(
-                    MaterialPageRoute(builder: (ctx) {
-                  switch (pageIndex) {
-                    case 5:
-                      return const Incomespage();
-                    case 6:
-                      return const Expensepage();
-                    default:
-                      return const Homepage();
-                  }
-                }), (route) => false);
+              Navigator.of(context).pushReplacement(
+                  MaterialPageRoute(builder: (context) => const Homepage()));
             }));
   }
 }

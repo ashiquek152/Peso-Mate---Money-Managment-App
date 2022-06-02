@@ -9,7 +9,7 @@ class TextWidget extends StatelessWidget {
     required this.text,
     this.fontWeight = FontWeight.normal,
     this.color = white,
-    this.family = "Comfortaa",
+    this.family = "Michroma",
     this.maxsize,
     this.minsize,
     this.defaultFont,
@@ -40,4 +40,4 @@ class TextWidget extends StatelessWidget {
     );
   }
 }
-const fontComforataa = "Comfortaa";
+const fontComforataa = "Michroma";

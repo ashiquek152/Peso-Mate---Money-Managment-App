@@ -49,7 +49,7 @@ class _MyCustomUIState extends State<Homepage>
             backgroundColor: amber,
             systemOverlayStyle: SystemUiOverlayStyle.dark,
             elevation: 0,
-            title:  const TextWidget(
+            title: const TextWidget(
                 text: "Peso Mate",
                 family: 'Swera',
                 color: white,
@@ -101,13 +101,29 @@ class _MyCustomUIState extends State<Homepage>
               }
               if (snapshot.hasData) {
                 if (snapshot.data!.isEmpty) {
-                  return  const Center(
-                      child: TextWidget(
-                    text: "Press + to add",
-                    color: scaffoldbgnew,
-                    maxsize: 25,
-                    minsize: 20,
-                  ));
+                  return
+                      Center(
+                        child: Column(children:  const [
+                    Image(image: AssetImage("assets/images/No data-pana2.png")),
+                    TextWidget(
+                        text: "No data found",
+                        minsize: 25,
+                        maxsize: 40,
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold,
+                    ),
+                    sizedH40,
+                    TextWidget(
+                        text: "Click + to add new",
+                        minsize: 25,
+                        family: "Delius",
+                        maxsize: 40,
+                        color: Colors.blueGrey,
+                        fontWeight: FontWeight.bold,
+                    ),
+
+                  ]),
+                      );
                 }
               }
               if (snapshot.data == null) {
@@ -125,15 +141,15 @@ class _MyCustomUIState extends State<Homepage>
                           totalBalance: totalBalance,
                           totalIncome: totalIncome,
                           totalExpense: totalExpense),
-                      sizedH10,
+                      
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
                           Text(
                             'Recent Transactions',
                             style: TextStyle(
-                                fontFamily: 'Comfortaa',
-                                fontSize: mqW / 20,
+                                fontFamily: fontComforataa,
+                                fontSize: mqW / 18,
                                 color: amber,
                                 fontWeight: FontWeight.bold),
                           ),
@@ -143,12 +159,13 @@ class _MyCustomUIState extends State<Homepage>
                                   height: mqH / 25,
                                   width: mqW / 2.5,
                                   child: ElevatedButton.icon(
-                                      icon:  Icon(
-                                          Icons.arrow_circle_right_outlined,
-                                          color: scfldWhite,
-                                          size: mqW/15,),
+                                      icon: Icon(
+                                        Icons.arrow_circle_right_outlined,
+                                        color: scfldWhite,
+                                        size: mqW / 15,
+                                      ),
                                       style: buttonStyle(color: amber),
-                                      label:  const TextWidget(
+                                      label: const TextWidget(
                                         text: "See all",
                                         fontWeight: FontWeight.bold,
                                         color: scfldWhite,

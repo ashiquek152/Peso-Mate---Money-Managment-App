@@ -69,6 +69,7 @@ class _AddTransactionState extends State<AddTransactionPage>
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
+      // resizeToAvoidBottomInset:true ,
       extendBodyBehindAppBar: true,
       appBar: const PreferredSize(
           preferredSize: Size.fromHeight(50),
@@ -89,7 +90,7 @@ class _AddTransactionState extends State<AddTransactionPage>
                         height: size.width * 1.1,
                         decoration: containerDecoration(),
                         child: Padding(
-                          padding: const EdgeInsets.all(8.0),
+                          padding:  const EdgeInsets.fromLTRB(8,8,8,0),
                           child: SingleChildScrollView(
                             child: Form(
                               key: addformKey1,
@@ -212,7 +213,7 @@ class _AddTransactionState extends State<AddTransactionPage>
                                                   color: scaffoldbgnew,
                                                   fontWeight: FontWeight.bold,
                                                   maxsize: 18,
-                                                  minsize: 14,
+                                                  minsize: 12,
                                                 ),
                                               )),
                                         ),
@@ -267,7 +268,7 @@ class _AddTransactionState extends State<AddTransactionPage>
       context: context,
       initialDate: selectedDate,
       firstDate: DateTime(2019, 06),
-      lastDate:  DateTime(2025, 06),
+      lastDate:  DateTime.now(),
     );
     if (pickedDate != null && pickedDate != selectedDate) {
       setState(() {

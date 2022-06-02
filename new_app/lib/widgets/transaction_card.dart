@@ -68,8 +68,11 @@ class _CardsState extends State<Cards> {
         offset: const Offset(0, 1.2),
         child: InkWell(
           enableFeedback: true,
-          onTap: () {
+          onLongPress: () {
             pageIndex!=1?Fluttertoast.showToast(msg: "Slide left to update"):null;
+          },
+          onTap: (){
+              pageIndex!=1?showTransactionsDetails():null;
           },
           highlightColor: Colors.transparent,
           splashColor: Colors.transparent,
@@ -109,7 +112,7 @@ class _CardsState extends State<Cards> {
                       TextWidget(
                         text: '${widget.data.amount}',
                         minsize: 11,
-                        defaultFont: 12,
+                        defaultFont: 16,
                         maxsize: 20,
                         fontWeight: FontWeight.w600,
                         color: Colors.black.withOpacity(.7),
@@ -139,5 +142,45 @@ class _CardsState extends State<Cards> {
           ),
         ),
       );
+  }
+
+  showTransactionsDetails(){
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return  SimpleDialog(
+          backgroundColor: scfldWhite,
+          title: Text(
+            widget.data.type.toString(),
+            style:  TextStyle(color:widget.data.type=="Income"?Colors.green:Colors.red, fontSize: 22,fontWeight: FontWeight.bold,fontFamily: fontComforataa),
+          ),
+          children:  [
+            Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                  "Amount : ${ widget.data.amount.toString()}",
+                    style: const TextStyle(color: scaffoldbgnew, fontSize: 18,fontWeight: FontWeight.bold,fontFamily: fontComforataa),
+                  ),
+                  sizedH10,
+                  Text(
+                  "Category : ${ widget.data.category.toString()}",
+                    style: const TextStyle(color: scaffoldbgnew, fontSize: 18,fontWeight: FontWeight.bold,fontFamily: fontComforataa),
+                  ),
+                  sizedH10,
+                  Text(
+                  "Date : ${selectedDate!.day} ${monthsList[selectedDate!.month - 1]} ${selectedDate!.year} ",
+                    style: const TextStyle(color: scaffoldbgnew, fontSize: 18,fontWeight: FontWeight.bold,fontFamily: fontComforataa),
+                  ),
+                ],
+              ),
+            )
+          ],
+        );
+      },
+    );
+
   }
 }

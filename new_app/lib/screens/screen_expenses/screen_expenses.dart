@@ -68,7 +68,14 @@ class _ExpensepageState extends State<Expensepage>
                       }
                       if (snapshot.hasData) {
                         if (snapshot.data!.isEmpty) {
-                          return const Text("No data found");
+                          return const Center(child:  TextWidget(
+                        text: "No transactions found",
+                        minsize: 25,
+                        family: "Delius",
+                        maxsize: 40,
+                        color: Colors.blueGrey,
+                        fontWeight: FontWeight.bold,
+                    ));
                         }
                       }
                       if (snapshot.data == null) {
