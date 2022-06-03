@@ -30,7 +30,7 @@ class _TransactionsChartState extends State<TransactionsChart> {
   @override
   Widget build(BuildContext context) {
     if (widget.entiredata.length < 2) {
-      return const Center(child: Text('Not enough data'));
+      return const Center(child: Text('Not enough data to render a chart'));
     } else {
       return Container(
           decoration: containerDecoration(),

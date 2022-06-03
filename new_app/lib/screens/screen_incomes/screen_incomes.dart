@@ -41,10 +41,8 @@ class _IncomespageState extends State<Incomespage>
     // double mqH = MediaQuery.of(context).size.height;
     double mqW = MediaQuery.of(context).size.width;
     return WillPopScope(
-      onWillPop: () async {
-        return await Navigator.of(context).pushReplacement(MaterialPageRoute(
-          builder: (context) => const Homepage(),
-        ));
+      onWillPop: ()async{
+       return  await Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) => const Homepage(),), (route) => false);
       },
       child: Scaffold(
         backgroundColor: scfldWhite,

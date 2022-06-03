@@ -41,9 +41,9 @@ class _ExpensepageState extends State<Expensepage>
     double mqW = MediaQuery.of(context).size.width;
     return WillPopScope(
       onWillPop: () async {
-        return await Navigator.of(context).pushReplacement(MaterialPageRoute(
-          builder: (context) => const Homepage(),
-        ));
+        return await Navigator.of(context).pushAndRemoveUntil(
+                  MaterialPageRoute(builder: (context) => const Homepage()),
+                  (route) => false);
       },
       child: Scaffold(
         backgroundColor: scfldWhite,

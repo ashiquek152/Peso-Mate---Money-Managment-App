@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:new_app/db_helper/db_helper.dart';
 import 'package:new_app/db_helper/transactions_model.dart';
-import 'package:new_app/screens/screen_expenses/screen_expenses.dart';
-import 'package:new_app/screens/screen_home/screen_home.dart';
-import 'package:new_app/screens/screen_incomes/screen_incomes.dart';
 import 'package:new_app/widgets/colors.dart';
 import 'package:new_app/widgets/common_appbar.dart';
 import 'package:new_app/widgets/fl_chart/fl_chart.dart';
@@ -27,21 +24,17 @@ class ScreenStatistics extends StatefulWidget {
 class _ScreenStatisticsState extends State<ScreenStatistics> {
   final items = <String>['Income', 'Expense'];
   @override
+  void initState() {
+    pageIndex=8;
+    super.initState();
+  }
+  @override
   Widget build(BuildContext context) {
     page = false;
     DbHelper dbHelper = DbHelper();
     return WillPopScope(
-      onWillPop: () async {
-        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (ctx) {
-           switch (pageIndex) {
-            case 3:
-            return const Incomespage();
-            case 4:
-            return const Expensepage();
-            default:
-            return const Homepage();
-          }
-        }));
+      onWillPop: ()async {
+        Navigator.of(context).pop();
         return false;
       },
       child: Scaffold(

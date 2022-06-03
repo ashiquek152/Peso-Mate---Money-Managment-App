@@ -1,13 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:new_app/screens/screen_home/screen_home.dart';
 import 'package:new_app/screens/screen_statics/screen_statistics.dart';
 import 'package:new_app/widgets/colors.dart';
-import 'package:new_app/widgets/global_variables.dart';
 import 'package:new_app/widgets/text_widget.dart';
 
-class AppBarcommon extends StatelessWidget {
+class AppBarcommon extends StatefulWidget {
   const AppBarcommon({
     Key? key,
     required this.actionVisiblity,
@@ -18,13 +16,18 @@ class AppBarcommon extends StatelessWidget {
   final bool actionVisiblity;
 
   @override
+  State<AppBarcommon> createState() => _AppBarcommonState();
+}
+
+class _AppBarcommonState extends State<AppBarcommon> {
+  @override
   Widget build(BuildContext context) {
     return AppBar(
         backgroundColor: amber,
         systemOverlayStyle: SystemUiOverlayStyle.dark,
         elevation: 0,
         title: TextWidget(
-          text: pageHeading,
+          text: widget.pageHeading,
           family: 'Swera',
           color: white,
           maxsize: 20,
@@ -34,16 +37,12 @@ class AppBarcommon extends StatelessWidget {
         automaticallyImplyLeading: false,
         actions: [
           Visibility(
-            visible: actionVisiblity,
+            visible: widget.actionVisiblity,
             child: IconButton(
                 onPressed: () {
                   Navigator.of(context)
                       .push(MaterialPageRoute(builder: (context) {
-                    if (pageIndex == 3) {
-                      return const ScreenStatistics();
-                    } else {
-                      return const ScreenStatistics();
-                    }
+                    return const ScreenStatistics();
                   }));
                 },
                 icon: const Icon(Icons.auto_graph_outlined),
@@ -54,9 +53,14 @@ class AppBarcommon extends StatelessWidget {
             enableFeedback: true,
             icon: const Icon(CupertinoIcons.arrow_left,
                 size: 30, color: scfldWhite),
-            onPressed: () {
-              Navigator.of(context).pushReplacement(
-                  MaterialPageRoute(builder: (context) => const Homepage()));
+            onPressed: ()  {
+              setState(() {
+                Navigator.of(context).pop();
+              });
+              
+              // Navigator.of(context).pushAndRemoveUntil(
+              //     MaterialPageRoute(builder: (context) => const Homepage()),
+              //     (route) => false);
             }));
   }
 }
