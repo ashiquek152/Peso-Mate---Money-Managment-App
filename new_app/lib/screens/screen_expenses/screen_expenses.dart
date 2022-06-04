@@ -3,6 +3,7 @@ import 'package:new_app/db_helper/db_helper.dart';
 import 'package:new_app/db_helper/transactions_model.dart';
 import 'package:new_app/functions/filter_by_period.dart';
 import 'package:new_app/screens/screen_home/screen_home.dart';
+import 'package:new_app/screens/screen_statics/screen_statistics.dart';
 import 'package:new_app/widgets/colors.dart';
 import 'package:new_app/widgets/common_appbar.dart';
 import 'package:new_app/widgets/global_variables.dart';
@@ -41,6 +42,8 @@ class _ExpensepageState extends State<Expensepage>
     double mqW = MediaQuery.of(context).size.width;
     return WillPopScope(
       onWillPop: () async {
+		  pageIndex=1;
+
         return await Navigator.of(context).pushAndRemoveUntil(
                   MaterialPageRoute(builder: (context) => const Homepage()),
                   (route) => false);
@@ -89,7 +92,7 @@ class _ExpensepageState extends State<Expensepage>
                                   Padding(
                                     padding: const EdgeInsets.all(8.0),
                                     child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.end,
+                                      mainAxisAlignment: MainAxisAlignment.spaceAround,
                                       children: [
                                         Container(
                                           width: 140,
@@ -135,6 +138,32 @@ class _ExpensepageState extends State<Expensepage>
                                             ).toList(),
                                           ),
                                         ),
+                                        InkWell(
+                                    onTap: () {
+                                      Navigator.of(context).push(
+                                            MaterialPageRoute(
+                                                builder: (context) {
+                                          return const ScreenStatistics();
+                                        }));
+                                    },
+                                    child: Container(
+                                      width:
+                                          MediaQuery.of(context).size.width * 0.26,
+                                      height:
+                                          MediaQuery.of(context).size.height * 0.05,
+                                      decoration: BoxDecoration(
+                                          color: white,
+                                          borderRadius: BorderRadius.circular(20)),
+                                      child:  const Center(
+                                          child: Text(
+                                        'Statistics',
+                                        style: TextStyle(
+											fontFamily: fontComforataa,
+											// fontWeight: FontWeight.bold,
+                                            color: scaffoldbgnew),
+                                      )),
+                                    ),
+                                  ),
                                       ],
                                     ),
                                   ),

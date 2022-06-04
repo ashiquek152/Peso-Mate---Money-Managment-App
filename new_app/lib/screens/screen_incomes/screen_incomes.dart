@@ -3,6 +3,7 @@ import 'package:new_app/db_helper/db_helper.dart';
 import 'package:new_app/db_helper/transactions_model.dart';
 import 'package:new_app/functions/filter_by_period.dart';
 import 'package:new_app/screens/screen_home/screen_home.dart';
+import 'package:new_app/screens/screen_statics/screen_statistics.dart';
 import 'package:new_app/widgets/colors.dart';
 import 'package:new_app/widgets/common_appbar.dart';
 import 'package:new_app/widgets/global_variables.dart';
@@ -29,6 +30,7 @@ class _IncomespageState extends State<Incomespage>
   Color buttonColor = Colors.amber;
   bool isButtonClicked = false;
   int selectedIndex = -1;
+  bool noTransaction = true;
 
   @override
   void initState() {
@@ -41,16 +43,21 @@ class _IncomespageState extends State<Incomespage>
     // double mqH = MediaQuery.of(context).size.height;
     double mqW = MediaQuery.of(context).size.width;
     return WillPopScope(
-      onWillPop: ()async{
-       return  await Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) => const Homepage(),), (route) => false);
+      onWillPop: () async {
+		  pageIndex=1;
+        return await Navigator.of(context).pushAndRemoveUntil(
+            MaterialPageRoute(
+              builder: (context) => const Homepage(),
+            ),
+            (route) => false);
       },
       child: Scaffold(
         backgroundColor: scfldWhite,
-        appBar: const PreferredSize(
-            preferredSize: Size.fromHeight(50),
+        appBar: PreferredSize(
+            preferredSize: const Size.fromHeight(50),
             child: AppBarcommon(
               pageHeading: "Incomes",
-              actionVisiblity: true,
+              actionVisiblity: noTransaction,
             )),
         body: Stack(
           children: [
@@ -67,14 +74,16 @@ class _IncomespageState extends State<Incomespage>
                       }
                       if (snapshot.hasData) {
                         if (snapshot.data!.isEmpty) {
-                          return const Center(child:  TextWidget(
-                        text: "No transactions found",
-                        minsize: 25,
-                        family: "Delius",
-                        maxsize: 40,
-                        color: Colors.blueGrey,
-                        fontWeight: FontWeight.bold,
-                    ));
+                          noTransaction = false;
+                          return const Center(
+                              child: TextWidget(
+                            text: "No transactions found",
+                            minsize: 25,
+                            family: "Delius",
+                            maxsize: 40,
+                            color: Colors.blueGrey,
+                            fontWeight: FontWeight.bold,
+                          ));
                         }
                       }
                       if (snapshot.data == null) {
@@ -86,7 +95,7 @@ class _IncomespageState extends State<Incomespage>
                             Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Row(
-                                mainAxisAlignment: MainAxisAlignment.end,
+                                mainAxisAlignment: MainAxisAlignment.spaceAround,
                                 children: [
                                   Container(
                                     width: 140,
@@ -127,6 +136,32 @@ class _IncomespageState extends State<Incomespage>
                                           );
                                         },
                                       ).toList(),
+                                    ),
+                                  ),
+									   InkWell(
+                                    onTap: () {
+                                      Navigator.of(context).push(
+                                            MaterialPageRoute(
+                                                builder: (context) {
+                                          return const ScreenStatistics();
+                                        }));
+                                    },
+                                    child: Container(
+                                      width:
+                                          MediaQuery.of(context).size.width * 0.26,
+                                      height:
+                                          MediaQuery.of(context).size.height * 0.05,
+                                      decoration: BoxDecoration(
+                                          color: white,
+                                          borderRadius: BorderRadius.circular(20)),
+                                      child:  const Center(
+                                          child: Text(
+                                        'Statistics',
+                                        style: TextStyle(
+											fontFamily: fontComforataa,
+											// fontWeight: FontWeight.bold,
+                                            color: scaffoldbgnew),
+                                      )),
                                     ),
                                   ),
                                 ],
@@ -176,7 +211,7 @@ class _IncomespageState extends State<Incomespage>
                                                                 scaffoldbgnew),
                                                       )),
                                                 );
-                                              })
+                                              }),
                                         ])))),
                             sizedH10,
                           ]),

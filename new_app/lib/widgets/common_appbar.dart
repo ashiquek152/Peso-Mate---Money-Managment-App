@@ -1,8 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:new_app/screens/screen_statics/screen_statistics.dart';
+import 'package:new_app/screens/screen_home/screen_home.dart';
 import 'package:new_app/widgets/colors.dart';
+import 'package:new_app/widgets/global_variables.dart';
 import 'package:new_app/widgets/text_widget.dart';
 
 class AppBarcommon extends StatefulWidget {
@@ -35,32 +36,20 @@ class _AppBarcommonState extends State<AppBarcommon> {
         ),
         centerTitle: true,
         automaticallyImplyLeading: false,
-        actions: [
-          Visibility(
-            visible: widget.actionVisiblity,
-            child: IconButton(
-                onPressed: () {
-                  Navigator.of(context)
-                      .push(MaterialPageRoute(builder: (context) {
-                    return const ScreenStatistics();
-                  }));
-                },
-                icon: const Icon(Icons.auto_graph_outlined),
-                tooltip: "Statistics"),
-          )
-        ],
         leading: IconButton(
             enableFeedback: true,
             icon: const Icon(CupertinoIcons.arrow_left,
                 size: 30, color: scfldWhite),
-            onPressed: ()  {
+            onPressed: () {
               setState(() {
-                Navigator.of(context).pop();
+                if (pageIndex == 8) {
+                  Navigator.of(context).pop();
+                } else {
+                  Navigator.of(context).pushAndRemoveUntil(
+                      MaterialPageRoute(builder: (context) => const Homepage()),
+                      (route) => false);
+                }
               });
-              
-              // Navigator.of(context).pushAndRemoveUntil(
-              //     MaterialPageRoute(builder: (context) => const Homepage()),
-              //     (route) => false);
             }));
   }
 }

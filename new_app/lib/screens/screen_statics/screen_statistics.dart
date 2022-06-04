@@ -38,6 +38,7 @@ class _ScreenStatisticsState extends State<ScreenStatistics> {
         return false;
       },
       child: Scaffold(
+        backgroundColor: scfldWhite,
           appBar: const PreferredSize(
             child: AppBarcommon(
                 actionVisiblity: false,
@@ -182,7 +183,7 @@ class _ScreenStatisticsState extends State<ScreenStatistics> {
                                                   decoration: const BoxDecoration(
                                                       image: DecorationImage(
                                                           image: AssetImage(
-                                                              'assets/images/NodataImage.jpg'))),
+                                                              'assets/images/No data-pana2.png'))),
                                                 ),
                                                 sizedH20,
                                                 const Text(

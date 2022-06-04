@@ -162,6 +162,7 @@ class _HomescreenState extends State<Updatescreen> {
                                         dataChanged = ValueNotifier(true);
                                         await dbHelper.updateDB(amount!, type,
                                             selectedDate, category, index);
+                                            pageIndex=1;
                                         Navigator.of(context)
                                             .pushAndRemoveUntil(
                                                 MaterialPageRoute(
