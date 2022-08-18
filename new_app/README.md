@@ -1,4 +1,4 @@
-#PesoMate money management app
+# PesoMate money management app
 
 Hi All,
 
