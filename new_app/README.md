@@ -1,16 +1,46 @@
-# new_app
+#PesoMate money management app
 
-A new Flutter project.
+Hi All,
 
-## Getting Started
+So it was my first project as a flutter developer. I was really excited to see my app listed among other apps in Playstore. Peso mate is a simple money management app with some features listed below.
 
-This project is a starting point for a Flutter application.
+play store link: https://lnkd.in/dPXQMp66
 
-A few resources to get you started if this is your first Flutter project:
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+github:https://lnkd.in/dgfKyGEh
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+-Add income and Expense.
+
+-Edit your transactions.
+
+-Filter your transactions.
+
+-Monthly and yearly statistics of your income and expense.
+
+-Set reminder using Notifications.
+
+
+>Developed with
+
+- Flutter.
+
+- Hive database.
+
+- Shared preference
+
+
+>Packages used
+
+- animations
+
+- Hive Flutter
+
+- Google Fonts
+
+- Fl chart
+
+- Flutter Local Notifications
+
+- Flutter Native Timezone
+
+- Flutter Slidable
