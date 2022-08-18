@@ -6,7 +6,6 @@ So it was my first project as a flutter developer. I was really excited to see m
 
 play store link: https://lnkd.in/dPXQMp66
 
-
 github:https://lnkd.in/dgfKyGEh
 
 -Add income and Expense.
